@@ -24,7 +24,7 @@ boot.prototype = {
     
     create: function(){        
         game.stage.backgroundColor = '#f1f1f1';
-        font = 'Exo';
+        font = 'Candal';
         frame = 0;
         name = '';
         
@@ -47,7 +47,9 @@ boot.prototype = {
             
             this.scale.forceOrientation(false, true);
         }
-        game.state.start('Preloader'); 
+        
+        game.state.start('Preloader');
+
     }
 };
 

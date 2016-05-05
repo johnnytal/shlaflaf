@@ -8,9 +8,17 @@ game_over.prototype = {
         optionLabel.text = '';
     },
     
-    init: function(score){
+    init: function(score, best){
+        var bestMessage, message;
         
-        var message = 'Your score: ' + score; 
+        if (best){
+            bestMessage = '\n is the best ever!';
+        }
+        else{
+            bestMessage = '';
+        }
+        
+        message = 'Your score: \n' + score + bestMessage; 
      
         modal.createModal({
             type:"game_over",
@@ -27,7 +35,7 @@ game_over.prototype = {
                     type: "text",
                     content: message,
                     fontFamily: font,
-                    fontSize: 34,
+                    fontSize: 36,
                     offsetY: -100,
                     color: "0xffff00",
                     stroke: "0xff0000",
@@ -38,7 +46,7 @@ game_over.prototype = {
                     content: "replay",
                     offsetY: 100,
                     callback: function () { // start a new game
-                        game.state.start('Game');
+                        game.state.start('Preloader');
                     }
                 }
             ]
