@@ -12,7 +12,7 @@ game_over.prototype = {
         var bestMessage, message;
         
         if (best){
-            bestMessage = '\n is the best ever!';
+            bestMessage = '\n New high score!';
         }
         else{
             bestMessage = '';
@@ -29,7 +29,7 @@ game_over.prototype = {
                  {
                     type: "image",
                     content: "panel",
-                    contentScale: 1.25
+                    contentScale: 1.35
                 },
                 {
                     type: "text",

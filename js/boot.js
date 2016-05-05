@@ -16,15 +16,16 @@ window.onload = function(){
 };
 
 var boot = function(game){};
-  
+
 boot.prototype = {
     preload: function(){
 
     },
     
-    create: function(){        
+    create: function(){  
+        font = 'Candal';      
         game.stage.backgroundColor = '#f1f1f1';
-        font = 'Candal';
+        
         frame = 0;
         name = '';
         

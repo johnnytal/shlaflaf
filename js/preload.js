@@ -70,8 +70,8 @@ preloader.prototype = {
         });     
         
         for (a=0; a<7; a++){
-            avatars[a] = this.add.sprite(50 + (a*80), 260, 'avatars');
-            avatars[a].scale.set(0.6, 0.6);
+            avatars[a] = this.add.sprite(30 + (a*85), 260, 'avatars');
+            avatars[a].scale.set(0.65, 0.65);
             avatars[a].frame = a;
             
             avatars[a].inputEnabled = true;
