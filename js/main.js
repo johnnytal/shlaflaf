@@ -1,5 +1,5 @@
 var game_main = function(game){
-    var buttons, options, life, option_to_create;
+    var buttons, options, life, option_to_create, labels;
     
     cords1 = [235, 221, 155, 185];
     cords2 = [415, 220, 335, 185];
@@ -80,6 +80,7 @@ game_main.prototype = {
             font: '25px ' + font, fill: 'darkred', fontWeight: 'normal', align: 'center'
         }); btn_nameLabel.anchor.set(0.5, 0.5);
         
+        labels = [btn_shlaflafLabel, btn_kazabubuLabel, btn_ilyichLabel, btn_nameLabel];
         
         optionLabel = this.add.text(330, 100, 'Ready? Set...', {
             font: '28px ' + font, fill: 'darkblue', fontWeight: 'bold', align: 'center'
@@ -100,6 +101,14 @@ game_main.prototype = {
     
     update: function(){
         
+        for (b = 0; b < buttons.length; b++){
+            if (init_time < 75){
+                try{
+                    labels[b].body.velocity.x = buttons[b].body.velocity.x;
+                    labels[b].body.velocity.y = buttons[b].body.velocity.y;
+                }catch(e){}
+            }
+        }       
     }
 };
 
@@ -122,10 +131,10 @@ function userPressed(chosen){
     if (chosen == 'button3' || chosen == 'button22' || chosen == 'button40' || chosen == 'button31'){
         var factor;
         
-        if (init_time < 80 && init_time >= 60){
+        if (init_time < 90 && init_time >= 75){
             factor = 3;
         }
-        else if (init_time < 60){
+        else if (init_time < 75){
            factor = 5; 
         }
         else{
@@ -167,13 +176,13 @@ function createOption(){
     option_to_create = game.rnd.integerInRange(0, 3);
     optionLabel.text = options[option_to_create];
 
-    time_factor += 2;
+    time_factor += 1;
     
     time_left = 100 - time_factor;
     init_time = time_left;
     
-    if (init_time < 80 && init_time >= 60) randomizeBtns(false);
-    else if (init_time < 60) randomizeBtns(true);
+    if (init_time < 90 && init_time >= 75) randomizeBtns(false);
+    else if (init_time < 75) randomizeBtns(true);
 
     timer = setInterval(function(){
        if (time_left > 0){
@@ -218,9 +227,7 @@ function save_score(){ // if it's the best score ever, save it to local storage
 }
 
 function randomizeBtns(crazy){
-
     var btn_locations = [];
-    var factor;
     
     while(btn_locations.length < 4){
          var randomnumber = game.rnd.integerInRange(0, 3);
@@ -238,43 +245,54 @@ function randomizeBtns(crazy){
              btn_locations[btn_locations.length] = randomnumber;
          }
     }
-    
-    if (crazy) factor = game.rnd.integerInRange(-150, 150);
-    else { factor = 0; }
 
-    btn_shlaflafLabel.x = cordsArray[btn_locations[0]][0] + factor;
-    btn_shlaflafLabel.y = cordsArray[btn_locations[0]][1] + factor;
-    if (crazy) btn_shlaflafLabel.fill = 'red';
+    btn_shlaflafLabel.x = cordsArray[btn_locations[0]][0];
+    btn_shlaflafLabel.y = cordsArray[btn_locations[0]][1];
     
-    buttons[0].x = cordsArray[btn_locations[0]][2] + factor;
-    buttons[0].y = cordsArray[btn_locations[0]][3] + factor;   
+    buttons[0].x = cordsArray[btn_locations[0]][2];
+    buttons[0].y = cordsArray[btn_locations[0]][3];   
     
-    if (crazy) factor = game.rnd.integerInRange(-150, 150);
+    btn_kazabubuLabel.x = cordsArray[btn_locations[1]][0];
+    btn_kazabubuLabel.y = cordsArray[btn_locations[1]][1];
     
-    btn_kazabubuLabel.x = cordsArray[btn_locations[1]][0] + factor;
-    btn_kazabubuLabel.y = cordsArray[btn_locations[1]][1] + factor;
-    if (crazy) btn_kazabubuLabel.fill = 'yellow';
+    buttons[1].x = cordsArray[btn_locations[1]][2];
+    buttons[1].y = cordsArray[btn_locations[1]][3]; 
     
-    buttons[1].x = cordsArray[btn_locations[1]][2] + factor;
-    buttons[1].y = cordsArray[btn_locations[1]][3] + factor; 
+    btn_ilyichLabel.x = cordsArray[btn_locations[2]][0];
+    btn_ilyichLabel.y = cordsArray[btn_locations[2]][1];
     
-    if (crazy) factor = game.rnd.integerInRange(-150, 150);
+    buttons[2].x = cordsArray[btn_locations[2]][2];
+    buttons[2].y = cordsArray[btn_locations[2]][3];   
     
-    btn_ilyichLabel.x = cordsArray[btn_locations[2]][0] + factor;
-    btn_ilyichLabel.y = cordsArray[btn_locations[2]][1] + factor;
-    if (crazy) btn_kazabubuLabel.fill = 'darkblue';
+    btn_nameLabel.x = cordsArray[btn_locations[3]][0];
+    btn_nameLabel.y = cordsArray[btn_locations[3]][1];
     
-    buttons[2].x = cordsArray[btn_locations[2]][2] + factor;
-    buttons[2].y = cordsArray[btn_locations[2]][3] + factor;   
+    buttons[3].x = cordsArray[btn_locations[3]][2];
+    buttons[3].y = cordsArray[btn_locations[3]][3];
     
-    if (crazy) factor = game.rnd.integerInRange(-150, 150);
+    if (crazy) physicsBtns(); 
+}
+
+function physicsBtns(){
     
-    btn_nameLabel.x = cordsArray[btn_locations[3]][0] + factor;
-    btn_nameLabel.y = cordsArray[btn_locations[3]][1] + factor;
-    if (crazy) btn_kazabubuLabel.fill = 'black';
-    
-    buttons[3].x = cordsArray[btn_locations[3]][2] + factor;
-    buttons[3].y = cordsArray[btn_locations[3]][3] + factor; 
+    for (b = 0; b < buttons.length; b++){
+        
+        game.physics.enable(buttons[b], Phaser.Physics.ARCADE);
+        game.physics.enable(labels[b], Phaser.Physics.ARCADE);
+        
+        buttons[b].enableBody = true;
+        labels[b].enableBody = true;
+
+        buttons[b].body.collideWorldBounds=true;
+        labels[b].body.collideWorldBounds=true;
+        
+        buttons[b].body.bounce.setTo(1, 1);
+        labels[b].body.bounce.setTo(1, 1);
+        
+        buttons[b].body.gravity.x = game.rnd.integerInRange(-25, 25) * (b + game.rnd.integerInRange(-2, 2));  
+        buttons[b].body.gravity.y = game.rnd.integerInRange(-25, 25) * (b + game.rnd.integerInRange(-2, 2));
+ 
+    }    
 }
 
 function avatarChosen(avatar){

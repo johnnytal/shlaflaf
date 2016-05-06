@@ -5,13 +5,13 @@ preloader.prototype = {
         // create progress % text
         font = 'Candal';
          
-        this.progress = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 30, '0%',{
+        this.progress = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 30, '',{
              font: '25px ' + font, fill: 'white', fontWeight: 'normal', align: 'center'
         });
         this.progress.anchor.setTo(0.5, 0.5);
         this.game.load.onFileComplete.add(this.fileComplete, this);
 
-        this.add.text(this.game.world.centerX - 37,  this.game.world.centerY - 150, "Loading...", {
+        this.add.text(this.game.world.centerX - 37,  this.game.world.centerY - 150, "", {
             font: '18px ' + font, fill: 'lightgrey', fontWeight: 'normal', align: 'center'
         });
 
@@ -43,42 +43,37 @@ preloader.prototype = {
         avatars = [];
         
         var bg = this.add.image(0, 0, 'bg');
-        bg.alpha = 0.8;
+        bg.alpha = 0.6;
         
-        this.add.text(this.game.world.centerX - 130,  this.game.world.centerY - 220, "How to play Shlaflaf :", {
+        this.add.text(this.game.world.centerX - 130,  30, "How to play Shlaflaf :", {
             font: '23px ' + font, fill: 'blue', fontWeight: 'bold', align: 'center'
         });
         
-        this.add.text(this.game.world.centerX - 260,  this.game.world.centerY - 170, 'iLyich says "Shlaflaf" -- You say your name', {
+        this.add.text(this.game.world.centerX - 260,  100, 'iLyich says "Shlaflaf" -- You say your name', {
             font: '22px ' + font, fill: 'purple', fontWeight: 'normal', align: 'center'
         });
         
-        this.add.text(this.game.world.centerX - 260,  this.game.world.centerY - 140, 'iLyich says your name -- You say "Shlaflaf"', {
+        this.add.text(this.game.world.centerX - 260, 150, 'iLyich says your name -- You say "Shlaflaf"', {
             font: '22px ' + font, fill: 'darkgreen', fontWeight: 'normal', align: 'center'
         });
         
-        this.add.text(this.game.world.centerX - 260,  this.game.world.centerY - 110, 'iLyich says "Kazabubu" -- You say "iLyich"', {
+        this.add.text(this.game.world.centerX - 260, 200, 'iLyich says "Kazabubu" -- You say "iLyich"', {
             font: '22px ' + font, fill: 'purple', fontWeight: 'normal', align: 'center'
         });
         
-        this.add.text(this.game.world.centerX - 260,  this.game.world.centerY - 80, 'iLyich says "iLyich" -- You say "Kazabubu"', {
+        this.add.text(this.game.world.centerX - 260, 250, 'iLyich says "iLyich" -- You say "Kazabubu"', {
             font: '22px ' + font, fill: 'darkgreen', fontWeight: 'normal', align: 'center'
         });
-                        
-        this.add.text(this.game.world.centerX - 220, 210, "Choose Avater To Start Playing :", {
-            font: '24px ' + font, fill: 'red', fontWeight: 'bold', align: 'center'
-        });     
-        
-        for (a=0; a<7; a++){
-            avatars[a] = this.add.sprite(30 + (a*85), 260, 'avatars');
-            avatars[a].scale.set(0.65, 0.65);
-            avatars[a].frame = a;
-            
-            avatars[a].inputEnabled = true;
-            avatars[a].input.useHandCursor = true;
-            avatars[a].events.onInputDown.add(avatarChosen, this);
-        }
+
+        this.add.text(this.game.world.centerX - 210, 315, ' Simple enough? Good! \n Tap anywhere to continue!', {
+            font: '29px ' + font, fill: 'darkblue', fontWeight: 'normal', align: 'center'
+        });
     }, 
+    update: function(){           
+        if(game.input.activePointer.isDown){
+            this.game.state.start("Avatar");  
+        }
+    }
 };
 
 preloader.prototype.fileComplete = function (progress, cacheKey, success, totalLoaded, totalFiles) {

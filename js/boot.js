@@ -9,6 +9,7 @@ window.onload = function(){
 
     game.state.add("Boot", boot);
     game.state.add("Preloader", preloader);
+    game.state.add("Avatar", avatar);
     game.state.add("Game", game_main);
     game.state.add("GameOver", game_over);
     
