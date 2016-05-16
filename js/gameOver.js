@@ -20,10 +20,6 @@ game_over.prototype = {
             } catch(e){}
         }
         
-        try{
-            if( banner.isReady) banner.show();
-        } catch(e){}
-        
         if (best){
             bestMessage = '\n New high score!';
         }
