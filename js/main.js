@@ -242,6 +242,8 @@ function takeLife(){
     
     if (lives > -1){
         lifeSprite[lives].kill();
+        
+        var bottle = this.add.image(135, 190, 'bottle');
     }
 
     if (lives == 0){ 
