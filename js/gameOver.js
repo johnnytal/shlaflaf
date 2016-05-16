@@ -11,6 +11,15 @@ game_over.prototype = {
     init: function(score, best){
         var bestMessage, message;
         
+        if (score > 999){
+            try{
+                socialService.submitAchievement(CgkIv-vN4MUBEAIQAQ, function(error){
+                    if (error)
+                        alert("submitAchievement error: " + error.message);
+                });
+            } catch(e){}
+        }
+        
         try{
             if( banner.isReady) banner.show();
         } catch(e){}
