@@ -3,7 +3,7 @@ var preloader = function(game){};
 preloader.prototype = {
     preload: function(){ 
         // create progress % text
-        font = 'Candal';
+        font = 'Luckiest Guy';
          
         this.progress = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 30, '',{
              font: '25px ' + font, fill: 'white', fontWeight: 'normal', align: 'center'
@@ -17,8 +17,11 @@ preloader.prototype = {
 
         // load assets
 
-        game.load.image('replay', 'images/menu.png');
         game.load.image('panel', 'images/panel.png');
+        game.load.image('replay', 'images/replay.png');
+        game.load.image('inst', 'images/inst.png');
+        game.load.image('arrow', 'images/arrow.png');
+        game.load.spritesheet('exit_btn', 'images/exit_btn.png', 40, 42);
         
         game.load.image('button', 'images/button.png');
         game.load.image('button2', 'images/button2.png');
@@ -32,7 +35,7 @@ preloader.prototype = {
         game.load.image('ilyich', 'images/ilyich.png');
 
         game.load.spritesheet('avatars', 'images/avatars.png',250/2, 880/7);
-        game.load.spritesheet('playBtn', 'images/playBtn.png',180, 190);
+        
 
        // game.load.audio('', 'audio/');
 
@@ -45,29 +48,91 @@ preloader.prototype = {
         var bg = this.add.image(0, 0, 'bg');
         bg.alpha = 0.6;
         
-        this.add.text(this.game.world.centerX - 130,  30, "How to play Shlaflaf :", {
-            font: '23px ' + font, fill: 'blue', fontWeight: 'bold', align: 'center'
+        this.add.text(this.game.world.centerX - 130,  15, "H o w    t o    p l a y  ?", {
+            font: '28px ' + font, fill: 'blue', align: 'center'
         });
         
-        this.add.text(this.game.world.centerX - 260,  100, 'iLyich says "Shlaflaf" -- You say your name', {
-            font: '22px ' + font, fill: 'purple', fontWeight: 'normal', align: 'center'
+        var ilyich = this.add.image(WIDTH - 135, 185, 'ilyich');
+        ilyich.tint = '0xffeeff';
+        
+        for (n = 0; n<4; n++){
+            cloud = this.add.image(80, 120 + (75*n), 'cloud');
+            cloud.scale.set(0.40, 0.20);
+            
+            arrow = this.add.image(230, 140 + (75*n), 'arrow');
+        }
+        
+        this.add.text(80,  70, "i L y i c h   s a y s", {
+            font: '25px ' + font, fill: 'darkgreen', align: 'center'
         });
         
-        this.add.text(this.game.world.centerX - 260, 150, 'iLyich says your name -- You say "Shlaflaf"', {
-            font: '22px ' + font, fill: 'darkgreen', fontWeight: 'normal', align: 'center'
+        this.add.text(330,  70, "Y o u   h a v e   t o   s a y", {
+            font: '25px ' + font, fill: 'darkgreen', align: 'center'
         });
         
-        this.add.text(this.game.world.centerX - 260, 200, 'iLyich says "Kazabubu" -- You say "iLyich"', {
-            font: '22px ' + font, fill: 'purple', fontWeight: 'normal', align: 'center'
+        this.add.text(130,  135, "SHLAFLAF!", {
+            font: '23px ' + font, fill: 'purple', align: 'center',
+            stroke:'#fff', strokeThickness: 1
         });
         
-        this.add.text(this.game.world.centerX - 260, 250, 'iLyich says "iLyich" -- You say "Kazabubu"', {
-            font: '22px ' + font, fill: 'darkgreen', fontWeight: 'normal', align: 'center'
+        this.add.text(130,  210, "Your name!", {
+            font: '23px ' + font, fill: '#cc0000', align: 'center',
+            stroke:'#fff', strokeThickness: 1
         });
+        
+        this.add.text(130,  285, "KAZABUBU!", {
+            font: '23px ' + font, fill: 'purple', align: 'center',
+            stroke:'#fff', strokeThickness: 1
+        });
+        
+        this.add.text(130,  360, "ILYICH!", {
+            font: '23px ' + font, fill: '#cc0000', align: 'center',
+            stroke:'#fff', strokeThickness: 1
+        });
+        
+        this.add.text(340,  135, "Your name", {
+            font: '23px ' + font, fill: 'purple', align: 'center',
+            stroke:'#fff', strokeThickness: 1
+        });
+        
+        this.add.text(340,  210, "SHLAFLAF", {
+            font: '23px ' + font, fill: '#cc0000', align: 'center',
+            stroke:'#fff', strokeThickness: 1
+        });
+        
+        this.add.text(340,  285, "ILYICH", {
+            font: '23px ' + font, fill: 'purple', align: 'center',
+            stroke:'#fff', strokeThickness: 1
+        });
+        
+        this.add.text(340,  360, "KAZABUBU", {
+            font: '23px ' + font, fill: '#cc0000', align: 'center',
+            stroke:'#fff', strokeThickness: 1
+        });
+        
+        this.add.text(80,  430, "S i m p l e   e n o u g h ?     T a p   t o   c o n t i n ue ! " , {
+            font: '23px ' + font, fill: 'darkblue', align: 'center',stroke:'#fff', strokeThickness: 1
+        });
+        
+        try{
+            Cocoon.Ad.AdMob.configure({
+                 android: { 
+                      banner:"ca-app-pub-9795366520625065/8387859836"
+                 }
+            });
+            
+            banner = Cocoon.Ad.AdMob.createBanner();
+            banner.load();
+            
+            banner.on("load", function(){
+                banner.setLayout( Cocoon.Ad.BannerLayout.BOTTOM_CENTER );
+            });
+            
+            if( banner.isReady ) banner.show();
+        
+        } catch(e){}
+        
 
-        this.add.text(this.game.world.centerX - 210, 315, ' Simple enough? Good! \n Tap anywhere to continue!', {
-            font: '29px ' + font, fill: 'darkblue', fontWeight: 'normal', align: 'center'
-        });
     }, 
     update: function(){           
         if(game.input.activePointer.isDown){
@@ -77,6 +142,6 @@ preloader.prototype = {
 };
 
 preloader.prototype.fileComplete = function (progress, cacheKey, success, totalLoaded, totalFiles) {
-    this.progress.text = progress+"%";
+    this.progress.text ="";
    // console.log(progress, cacheKey, success);
 };

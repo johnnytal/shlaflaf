@@ -3,13 +3,17 @@ var game_over = function(game){};
 game_over.prototype = {
 
     preload: function(){
+        timeLabel.text = 'T i m e : 00';
         clearInterval(timer);
-        timeLabel.text = 0;
-        optionLabel.text = '';
+        optionLabel.text = 'GAME OVER!';
     },
     
     init: function(score, best){
         var bestMessage, message;
+        
+        try{
+            if( banner.isReady) banner.show();
+        } catch(e){}
         
         if (best){
             bestMessage = '\n New high score!';
@@ -29,7 +33,7 @@ game_over.prototype = {
                  {
                     type: "image",
                     content: "panel",
-                    contentScale: 1.35
+                    contentScale: 1.3
                 },
                 {
                     type: "text",
@@ -43,21 +47,34 @@ game_over.prototype = {
                 },
                 {
                     type: "image",
-                    content: "replay",
-                    offsetY: 100,
-                    callback: function () { // start a new game
+                    content: "inst",
+                    offsetY: 70,
+                    offsetX: 60,
+                    callback: function () { // menu
                         game.state.start('Preloader');
+                    }
+                },            
+                {
+                    type: "image",
+                    content: "replay",
+                    offsetY: 70,
+                    offsetX: -60,
+                    callback: function () { // new game
+                        game.state.start('Avatar');
                     }
                 }
             ]
         });   
             
         modal.showModal("game_over");
-        for (n=0; n<3; n++){
+        for (n=0; n<4; n++){
             game.add.tween(modal.getModalItem('game_over',n)).from( { y: - 800 }, 500, Phaser.Easing.Linear.In, true);
         }
         
         replayImg = modal.getModalItem('game_over',2);
         replayImg.input.useHandCursor = true;
+        
+        playImg = modal.getModalItem('game_over',3);
+        playImg.input.useHandCursor = true;
     }
 };

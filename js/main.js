@@ -36,7 +36,7 @@ game_main.prototype = {
         avatar.frame = frame;
         
         for (l=0; l<lives; l++){
-            lifeSprite[l] = this.add.sprite(470 + (l*50), 25, 'avatars');
+            lifeSprite[l] = this.add.sprite(490 + (l*45), 22, 'avatars');
             lifeSprite[l].frame = frame;
             lifeSprite[l].scale.set(0.3, 0.3);
         }
@@ -47,7 +47,7 @@ game_main.prototype = {
         var btn_name = this.add.sprite(155, 260, 'button4');
         
         buttons = [btn_shlaflaf, btn_kazabubu, btn_ilyich, btn_name];
-        options = ['Shlaflaf!', 'Kazabubu!', 'iLyich!', name + '!'];
+        options = ['S h l a f l a f!', 'K a z a b u b u!', 'I L Y I C H!', nameS + '!'];
 
         for (b=0; b<buttons.length; b++){
             buttons[b].inputEnabled = true;
@@ -59,42 +59,68 @@ game_main.prototype = {
         bestScore = localStorage.getItem("shlaflaf-bestScore");
         if (bestScore == null) bestScore = 0;
         
-        bestScoreLebal = this.add.text(40, 440, 'Best: ' + bestScore, {
-            font: '18px ' + font, fill: 'yellow', fontWeight: 'normal', align: 'center'
+        bestScoreLebal = this.add.text(20, 440, 'High Score: ' + bestScore, {
+            font: '17px ' + font, fill: 'yellow', fontWeight: 'normal', align: 'center',
+            stroke:'#000', strokeThickness: 1
         });
-        
-        
+
         btn_shlaflafLabel = this.add.text(235, 221, 'Shlaflaf', {
-            font: '25px ' + font, fill: 'darkred', fontWeight: 'normal', align: 'center'
+            font: '25px ' + font, fill: '#cc0000', fontWeight: 'normal', align: 'center'
         }); btn_shlaflafLabel.anchor.set(0.5, 0.5);
         
         btn_kazabubuLabel = this.add.text(415, 220, 'Kazabubu', {
-            font: '25px ' + font, fill: 'darkred', fontWeight: 'normal', align: 'center'
+            font: '25px ' + font, fill: '#cc0000', fontWeight: 'normal', align: 'center'
         }); btn_kazabubuLabel.anchor.set(0.5, 0.5);
         
-        btn_ilyichLabel = this.add.text(415, 298, 'iLyich', {
-            font: '25px ' + font, fill: 'darkred', fontWeight: 'normal', align: 'center'
+        btn_ilyichLabel = this.add.text(415, 298, 'ILYICH', {
+            font: '25px ' + font, fill: '#cc0000', fontWeight: 'normal', align: 'center'
         }); btn_ilyichLabel.anchor.set(0.5, 0.5);
        
         btn_nameLabel = this.add.text(235, 300, name, {
-            font: '25px ' + font, fill: 'darkred', fontWeight: 'normal', align: 'center'
+            font: '25px ' + font, fill: '#cc0000', fontWeight: 'normal', align: 'center'
         }); btn_nameLabel.anchor.set(0.5, 0.5);
         
         labels = [btn_shlaflafLabel, btn_kazabubuLabel, btn_ilyichLabel, btn_nameLabel];
         
-        optionLabel = this.add.text(330, 100, 'Ready? Set...', {
-            font: '28px ' + font, fill: 'darkblue', fontWeight: 'bold', align: 'center'
+        optionLabel = this.add.text(335, 100, '', {
+            font: '36px ' + font, fill: 'blue', fontWeight: 'normal', align: 'center', 
+            stroke:'lightyellow', strokeThickness: 3
         }); optionLabel.anchor.set(0.5, 0.5);
         
-        timeLabel = this.add.text(27, 70, 'Time: ' + time_left, {
+        optionLabel.setShadow(1, 1, 'rgba(0,0,0,0.4)', 5);
+        
+        timeLabel = this.add.text(280, 10, 'T i m e: ' + time_left, {
             font: '22px ' + font, fill: 'red', fontWeight: 'normal', align: 'center'
         });
         
-        scoreLabel = this.add.text(25, 25, 'Score: ' + score, {
-            font: '24px ' + font, fill: 'darkgreen', fontWeight: 'normal', align: 'center'
+        scoreLabel = this.add.text(18, 25, 'Score: ' + score, {
+            font: '26px ' + font, fill: 'darkgreen', fontWeight: 'normal', align: 'center'
         });
+        
+        exit_btn = this.add.button(580, 425, 'exit_btn');       
+        exit_btn.inputEnabled = true;
+        exit_btn.input.useHandCursor = true;
+        
+        exit_btn.events.onInputOver.add(function(){ 
+            exit_btn.frame = 1;
+        }, this);
+        
+        exit_btn.events.onInputOut.add(function(){ 
+            exit_btn.frame = 0;
+        }, this);
+        
+        exit_btn.events.onInputDown.add(function(){ 
+            game.state.start('GameOver', false, false, score, save_score());
+        }, this);
 
         createOption(); 
+        
+        try{
+            if( banner.isReady) banner.hide();
+            banner.on("load", function(){
+               banner.hide();
+            });
+        } catch(e){}
         
         modal = new gameModal(game);
     },
@@ -125,6 +151,7 @@ function userPressed(chosen){
     
     for (b=0; b<buttons.length; b++){
         buttons[b].inputEnabled = false;
+        exit_btn.inputEnabled = false;
         buttons[b].input.useHandCursor = false;
     } 
  
@@ -171,7 +198,7 @@ function userPressed(chosen){
 
 function createOption(){
     optionLabel.y = 100;
-    optionLabel.fill = 'darkblue';
+    optionLabel.fill = '#1874CD';
     
     option_to_create = game.rnd.integerInRange(0, 3);
     optionLabel.text = options[option_to_create];
@@ -187,17 +214,23 @@ function createOption(){
     timer = setInterval(function(){
        if (time_left > 0){
            time_left--;
-           timeLabel.text = 'Time: ' + time_left; 
+           timeLabel.text = 'T i m e : ' + time_left; 
+           
+           if (time_left < 10) {
+               timeLabel.text = 'T i m e : 0' + time_left; 
+           }
        }
        
        else{
-          userPressed(0);
+           userPressed(0);
+           timeLabel.text = 'T i m e : 0' + time_left; 
        }
     }, 30);
     
     if (time_left > 0){
         for (b=0; b<buttons.length; b++){
             buttons[b].inputEnabled = true;
+            exit_btn.inputEnabled = true;
             buttons[b].input.useHandCursor = true;
             buttons[b].tint = 0xffffff;
         }   
@@ -211,7 +244,7 @@ function takeLife(){
         lifeSprite[lives].kill();
     }
 
-    if (lives == 0){
+    if (lives == 0){ 
         game.state.start('GameOver', false, false, score, save_score());
     }
 }
@@ -301,25 +334,32 @@ function avatarChosen(avatar){
     
     switch(avatar.frame){
        case 0:
-           name = 'Snake';
+           nameS = 'S N A K E';
+           name = 'SNAKE';
        break; 
        case 1:
-           name = 'Hippo';
+           nameS = 'H I P P O';
+           name = 'HIPPO';
        break; 
        case 2:
-           name = 'Rabbit';
+           nameS = 'R A B B I T';
+           name = 'RABBIT';
        break; 
        case 3:
-           name = 'Giraffe';
+           nameS = 'G I R A F F E';
+           name = 'GIRAFFE';
        break; 
        case 4:
-           name = 'Pig';
+           nameS = 'P I G';
+           name = 'PIG';
        break; 
        case 5:
-           name = 'Parrot';
+           nameS = 'P A R R O T';
+           name = 'PARROT';
        break; 
        case 6:
-           name = 'Penguin';
+           nameS = 'P E N G U I N';
+           name = 'PENGUIN';
        break; 
     }
     
