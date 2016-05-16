@@ -386,7 +386,7 @@ function avatarChosen(avatar){
        break; 
     }
        
-    try{
+   /* try{
         Cocoon.Social.GooglePlayGames.init({
              defaultLeaderboard: "CgkIv-vN4MUBEAIQBw"
         });
@@ -395,7 +395,7 @@ function avatarChosen(avatar){
         if (googlelogindone == false){
             socialService.login(function(loggedIn, error) {});
         }
-    } catch(e){}
+    } catch(e){}*/
     
     this.game.state.start("Game");  
 }
