@@ -30,7 +30,7 @@ boot.prototype = {
         font = 'Luckiest Guy';      
         game.stage.backgroundColor = '#f1f1f1';
         
-        banner = null;
+        var banner;
         
         frame = 0;
         name = '';
@@ -58,7 +58,19 @@ boot.prototype = {
         }
         
         game.state.start('Preloader');
-
+        
+        Cocoon.Ad.AdMob.configure({
+            android: { 
+                  banner:"ca-app-pub-9795366520625065/8387859836"
+            }
+        });
+        
+        banner = Cocoon.Ad.AdMob.createBanner();
+        banner.load();
+        
+        banner.on("load", function(){
+            banner.setLayout( Cocoon.Ad.BannerLayout.BOTTOM_CENTER );
+        });
     }
 };
 

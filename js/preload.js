@@ -114,15 +114,6 @@ preloader.prototype = {
         this.add.text(80,  430, "S i m p l e   e n o u g h ?     T a p   t o   c o n t i n ue ! " , {
             font: '23px ' + font, fill: 'darkblue', align: 'center',stroke:'#fff', strokeThickness: 1
         });
-        
-        try{
-            Cocoon.Social.GooglePlayGames.init({});
-            socialService = Cocoon.Social.GooglePlayGames.getSocialInterface();
-            
-            if (googlelogindone == false){
-                GoogleLogin();
-            }
-        } catch(e){}
     }, 
     update: function(){           
         if(game.input.activePointer.isDown){
@@ -135,18 +126,3 @@ preloader.prototype.fileComplete = function (progress, cacheKey, success, totalL
     this.progress.text ="";
    // console.log(progress, cacheKey, success);
 };
-
-function GoogleLogin() {
-    socialService.login(function(loggedIn, error) {
-        if (error) {
-            alert("login error: " + error.message);
-        }
-        else if (loggedIn) {
-            alert("login succeeded");
-            googlelogindone = true;
-        }
-        else {
-            alert("login cancelled");
-        }
-    });
-}

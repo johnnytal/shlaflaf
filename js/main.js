@@ -116,6 +116,8 @@ game_main.prototype = {
         createOption(); 
         
         modal = new gameModal(game);
+        
+        banner.hide();
     },
     
     update: function(){
@@ -367,6 +369,15 @@ function avatarChosen(avatar){
            name = 'PENGUIN';
        break; 
     }
+       
+    try{
+        Cocoon.Social.GooglePlayGames.init({});
+        socialService = Cocoon.Social.GooglePlayGames.getSocialInterface();
+        
+        if (googlelogindone == false){
+            socialService.login(function(loggedIn, error) {});
+        }
+    } catch(e){}
     
     this.game.state.start("Game");  
 }
