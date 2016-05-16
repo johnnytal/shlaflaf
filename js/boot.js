@@ -32,8 +32,7 @@ boot.prototype = {
         
         frame = 0;
         name = '';
-        var banner;
-        
+
         if (this.game.device.desktop){
             this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
             

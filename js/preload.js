@@ -114,28 +114,6 @@ preloader.prototype = {
         this.add.text(80,  430, "S i m p l e   e n o u g h ?     T a p   t o   c o n t i n ue ! " , {
             font: '23px ' + font, fill: 'darkblue', align: 'center',stroke:'#fff', strokeThickness: 1
         });
-        
-      //  try{
-            Cocoon.Ad.AdMob.configure({
-                 android: { 
-                      banner:"ca-app-pub-9795366520625065/8387859836"
-                 }
-            });
-            
-            banner = Cocoon.Ad.AdMob.createBanner();
-            banner.load();
-            
-            banner.on("load", function(){
-                banner.setLayout( Cocoon.Ad.BannerLayout.BOTTOM_CENTER );
-            });
-            
-            banner.show();
-            
-           // if( banner.isReady ) banner.show();
-        
-        //} catch(e){}
-        
-
     }, 
     update: function(){           
         if(game.input.activePointer.isDown){

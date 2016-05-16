@@ -39,5 +39,20 @@ avatar.prototype = {
                 font: '16px ' + font, fill: 'lightblue', align: 'left', stroke:'#000', strokeThickness: 1
             });
         }
+        
+            Cocoon.Ad.AdMob.configure({
+                android: { 
+                      banner:"ca-app-pub-9795366520625065/8387859836"
+                }
+            });
+            
+            banner = Cocoon.Ad.AdMob.createBanner();
+            banner.load();
+            
+            banner.on("load", function(){
+                banner.setLayout( Cocoon.Ad.BannerLayout.BOTTOM_CENTER );
+            });
+            
+            banner.show();
     }, 
 };

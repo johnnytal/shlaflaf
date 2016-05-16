@@ -1,5 +1,5 @@
 var game_main = function(game){
-    var buttons, options, life, option_to_create, labels;
+    var buttons, options, life, option_to_create, labels, rndTime;
     
     cords1 = [235, 221, 155, 185];
     cords2 = [415, 220, 335, 185];
@@ -114,13 +114,6 @@ game_main.prototype = {
         }, this);
 
         createOption(); 
-        
-        try{
-            if( banner.isReady) banner.hide();
-            banner.on("load", function(){
-               banner.hide();
-            });
-        } catch(e){}
         
         modal = new gameModal(game);
     },
@@ -243,11 +236,20 @@ function takeLife(){
     if (lives > -1){
         lifeSprite[lives].kill();
         
-        var bottle = this.add.image(135, 190, 'bottle');
-    }
-
-    if (lives == 0){ 
-        game.state.start('GameOver', false, false, score, save_score());
+        var bottle = game.add.image(178, 140, 'bottle');
+        bottle.anchor.set(1, 0);
+        bottle.angle = 60;
+        tweenBottle = game.add.tween(bottle).to( { angle: -15 }, 120, Phaser.Easing.Linear.None, true); 
+        
+        tweenBottle.onComplete.add(function(){ 
+            setTimeout(function(){
+                bottle.kill(); 
+                    if (lives == 0){ 
+                        game.state.start('GameOver', false, false, score, save_score());
+                    }
+            }, rndTime);
+        
+        }, this);
     }
 }
 
@@ -331,6 +333,7 @@ function physicsBtns(){
 }
 
 function avatarChosen(avatar){
+    banner.hide();
     
     frame = avatar.frame;
     
