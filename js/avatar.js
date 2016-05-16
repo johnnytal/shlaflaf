@@ -38,8 +38,6 @@ avatar.prototype = {
             this.add.text(x+10 + (a*110), y + 85, names[a], {
                 font: '16px ' + font, fill: 'lightblue', align: 'left', stroke:'#000', strokeThickness: 1
             });
-        }
-        
-            banner.show();
+        }    
     }, 
 };

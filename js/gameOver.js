@@ -11,13 +11,9 @@ game_over.prototype = {
     init: function(score, best){
         var bestMessage, message;
         
-        if (score > 999){
-            try{
-                socialService.submitAchievement(CgkIv-vN4MUBEAIQAQ, function(error){
-                       
-                });
-            } catch(e){}
-        }
+        try{
+            banner.show();
+        } catch(e){}
         
         if (best){
             bestMessage = '\n New high score!';
@@ -56,6 +52,12 @@ game_over.prototype = {
                     offsetX: 60,
                     callback: function () { // menu
                         game.state.start('Preloader');
+                        
+                        socialService.submitScore( score, function(error){});
+                        socialService.showLeaderboard(function(error){});
+      
+                        if (score > 999) socialService.submitAchievement(CgkIv-vN4MUBEAIQAQ, function(error){});
+
                     }
                 },            
                 {
@@ -65,6 +67,11 @@ game_over.prototype = {
                     offsetX: -60,
                     callback: function () { // new game
                         game.state.start('Avatar');
+                        
+                        socialService.submitScore( score, function(error){});
+                        
+                        if (score > 999) socialService.submitAchievement(CgkIv-vN4MUBEAIQAQ, function(error){});
+                        socialService.showAchievements(function(error){});
                     }
                 }
             ]
