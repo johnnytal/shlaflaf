@@ -21,6 +21,7 @@ preloader.prototype = {
         game.load.image('replay', 'images/replay.png');
         game.load.image('inst', 'images/inst.png');
         game.load.image('arrow', 'images/arrow.png');
+        game.load.image('bottle', 'images/bottle.png');
         game.load.spritesheet('exit_btn', 'images/exit_btn.png', 40, 42);
         
         game.load.image('button', 'images/button.png');
@@ -114,7 +115,7 @@ preloader.prototype = {
             font: '23px ' + font, fill: 'darkblue', align: 'center',stroke:'#fff', strokeThickness: 1
         });
         
-        try{
+      //  try{
             Cocoon.Ad.AdMob.configure({
                  android: { 
                       banner:"ca-app-pub-9795366520625065/8387859836"
@@ -128,9 +129,11 @@ preloader.prototype = {
                 banner.setLayout( Cocoon.Ad.BannerLayout.BOTTOM_CENTER );
             });
             
-            if( banner.isReady ) banner.show();
+            banner.show();
+            
+           // if( banner.isReady ) banner.show();
         
-        } catch(e){}
+        //} catch(e){}
         
 
     }, 
