@@ -30,7 +30,7 @@ boot.prototype = {
         font = 'Luckiest Guy';      
         game.stage.backgroundColor = '#f1f1f1';
         
-        var banner;
+        var bannerNotCraeted = true;
         
         frame = 0;
         name = '';

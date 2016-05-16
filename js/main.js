@@ -118,21 +118,24 @@ game_main.prototype = {
         modal = new gameModal(game);
         
         try{banner.hide();} catch(e){}
-    
-        Cocoon.Ad.AdMob.configure({
-            android: { 
-                  banner:"ca-app-pub-9795366520625065/8387859836"
-            }
-        });
         
-        banner = Cocoon.Ad.AdMob.createBanner();
-        banner.load();
-        
-        banner.on("load", function(){
-            banner.setLayout( Cocoon.Ad.BannerLayout.BOTTOM_CENTER );
-        });
-        
-        try{banner.hide();} catch(e){}
+        if (bannerNotCraeted){
+            Cocoon.Ad.AdMob.configure({
+                android: { 
+                      banner:"ca-app-pub-9795366520625065/8387859836"
+                }
+            });
+            
+            banner = Cocoon.Ad.AdMob.createBanner();
+            banner.load();
+            
+            banner.on("load", function(){
+                banner.setLayout( Cocoon.Ad.BannerLayout.BOTTOM_CENTER );
+            });
+            
+            bannerNotCraeted = false;
+        }
+
     },
     
     update: function(){
