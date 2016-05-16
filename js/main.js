@@ -387,7 +387,9 @@ function avatarChosen(avatar){
     }
        
     try{
-        Cocoon.Social.GooglePlayGames.init({});
+        Cocoon.Social.GooglePlayGames.init({
+             defaultLeaderboard: "CgkIv-vN4MUBEAIQBw"
+        });
         socialService = Cocoon.Social.GooglePlayGames.getSocialInterface();
         
         if (googlelogindone == false){

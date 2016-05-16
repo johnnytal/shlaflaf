@@ -1,5 +1,5 @@
-document.addEventListener("deviceready", start, false);
-//window.onload = start;
+//document.addEventListener("deviceready", start, false);
+window.onload = start;
 
 function start(){
     WIDTH = 640; 
@@ -30,7 +30,7 @@ boot.prototype = {
         font = 'Luckiest Guy';      
         game.stage.backgroundColor = '#f1f1f1';
         
-        var bannerNotCraeted = true;
+        bannerNotCraeted = true;
         
         frame = 0;
         name = '';
