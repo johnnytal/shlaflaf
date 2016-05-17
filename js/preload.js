@@ -38,7 +38,18 @@ preloader.prototype = {
         game.load.spritesheet('avatars', 'images/avatars.png',250/2, 880/7);
         
 
-       // game.load.audio('', 'audio/');
+        game.load.audio('bark1', 'audio/bark1.mp3');
+        game.load.audio('bark2', 'audio/bark2.mp3');
+        game.load.audio('bark3', 'audio/bark3.mp3');
+        game.load.audio('bark4', 'audio/bark4.mp3');
+        
+        game.load.audio('bottle', 'audio/bottle.mp3');
+        game.load.audio('click', 'audio/click.mp3');
+        game.load.audio('fail', 'audio/fail.mp3');
+        game.load.audio('gameOver', 'audio/gameOver.mp3');
+        game.load.audio('music', 'audio/music.mp3');
+        game.load.audio('success', 'audio/success.mp3');
+        game.load.audio('waiting', 'audio/waiting.mp3');
 
     },
     
@@ -63,11 +74,11 @@ preloader.prototype = {
             arrow = this.add.image(230, 140 + (75*n), 'arrow');
         }
         
-        this.add.text(80,  70, "i L y i c h   s a y s", {
+        this.add.text(80,  70, "i L y i c h   s a y s :", {
             font: '25px ' + font, fill: 'darkgreen', align: 'center'
         });
         
-        this.add.text(330,  70, "Y o u   h a v e   t o   s a y", {
+        this.add.text(330,  70, "Y o u   h a v e   t o   s a y :", {
             font: '25px ' + font, fill: 'darkgreen', align: 'center'
         });
         

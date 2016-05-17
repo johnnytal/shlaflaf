@@ -47,7 +47,7 @@ game_main.prototype = {
         var btn_name = this.add.sprite(155, 260, 'button4');
         
         buttons = [btn_shlaflaf, btn_kazabubu, btn_ilyich, btn_name];
-        options = ['S h l a f l a f!', 'K a z a b u b u!', 'I L Y I C H!', nameS + '!'];
+        options = ['S h l a f l a f !', 'K a z a b u b u !', 'I L Y I C H !', nameS + ' !'];
 
         for (b=0; b<buttons.length; b++){
             buttons[b].inputEnabled = true;
@@ -82,7 +82,7 @@ game_main.prototype = {
         
         labels = [btn_shlaflafLabel, btn_kazabubuLabel, btn_ilyichLabel, btn_nameLabel];
         
-        optionLabel = this.add.text(335, 100, '', {
+        optionLabel = this.add.text(333, 100, '', {
             font: '36px ' + font, fill: 'blue', fontWeight: 'normal', align: 'center', 
             stroke:'lightyellow', strokeThickness: 3
         }); optionLabel.anchor.set(0.5, 0.5);
@@ -101,18 +101,25 @@ game_main.prototype = {
         exit_btn.inputEnabled = true;
         exit_btn.input.useHandCursor = true;
         
-        exit_btn.events.onInputOver.add(function(){ 
-            exit_btn.frame = 1;
-        }, this);
-        
-        exit_btn.events.onInputOut.add(function(){ 
-            exit_btn.frame = 0;
-        }, this);
-        
         exit_btn.events.onInputDown.add(function(){ 
-            game.state.start('GameOver', false, false, score, save_score());
+            gameOver();
         }, this);
-
+        
+        barksSfx = [
+            game.add.audio('bark1', 0.7, false),
+            game.add.audio('bark2', 0.7, false),
+            game.add.audio('bark3', 0.7, false),
+            game.add.audio('bark4', 0.7, false)
+        ];
+        
+        bottleSfx = game.add.audio('bottle');
+        clickSfx = game.add.audio('click');
+        failSfx = game.add.audio('fail');
+        gameOverSfx = game.add.audio('gameOver');
+        musicSfx = game.add.audio('music', 1, true);
+        successSfx = game.add.audio('success');
+        waitingSfx = game.add.audio('waiting', 0.2, false);
+        
         createOption(); 
         
         modal = new gameModal(game);
@@ -120,22 +127,25 @@ game_main.prototype = {
         try{banner.hide();} catch(e){}
         
         if (bannerNotCraeted){
-            Cocoon.Ad.AdMob.configure({
-                android: { 
-                      banner:"ca-app-pub-9795366520625065/8387859836"
-                }
-            });
-            
-            banner = Cocoon.Ad.AdMob.createBanner();
-            banner.load();
-            
-            banner.on("load", function(){
-                banner.setLayout( Cocoon.Ad.BannerLayout.BOTTOM_CENTER );
-            });
-            
-            bannerNotCraeted = false;
+            try{
+                Cocoon.Ad.AdMob.configure({
+                    android: { 
+                          banner:"ca-app-pub-9795366520625065/8387859836"
+                    }
+                });
+                
+                banner = Cocoon.Ad.AdMob.createBanner();
+                banner.load();
+                
+                banner.on("load", function(){
+                    banner.setLayout( Cocoon.Ad.BannerLayout.BOTTOM_CENTER );
+                });
+                
+                bannerNotCraeted = false;
+            } catch(e){}
         }
-
+        
+        setTimeout(function(){musicSfx.play();}, 500);
     },
     
     update: function(){
@@ -156,11 +166,13 @@ function userInput(btn){
         btn.tint = 0x00ffff;
         chosen = String(btn.key + option_to_create);
         userPressed(chosen);
+        clickSfx.play();
     }
 }
 
 function userPressed(chosen){
     clearInterval(timer);
+    waitingSfx.stop();
     
     for (b=0; b<buttons.length; b++){
         buttons[b].inputEnabled = false;
@@ -188,16 +200,18 @@ function userPressed(chosen){
         score += rounded;
         scoreLabel.text = 'Score: ' + score;
         
-        optionLabel.text = '+' + rounded + ' pts';
-        optionLabel.fill = 'purple';
-        //game.add.tween(optionLabel).to( { y: -15 }, 490, Phaser.Easing.Linear.None, true);
+        optionLabel.text = '+ ' + rounded + ' pts';
+        optionLabel.fill = '#885ead';
+        
+        successSfx.play();
     }
     else{
        takeLife();
        
        optionLabel.text = 'F A I L !';
        optionLabel.fill = 'red';
-       //game.add.tween(optionLabel).to( { y: -10 }, 490, Phaser.Easing.Linear.None, true); 
+       
+       failSfx.play();
     }    
 
     rndTime = game.rnd.integerInRange(300, 2500);
@@ -223,7 +237,11 @@ function createOption(){
     
     if (init_time < 90 && init_time >= 75) randomizeBtns(false);
     else if (init_time < 75) randomizeBtns(true);
-
+    
+    barksSfx[option_to_create].play();
+    
+    setTimeout(function(){ waitingSfx.play(); },300);
+    
     timer = setInterval(function(){
        if (time_left > 0){
            time_left--;
@@ -262,11 +280,10 @@ function takeLife(){
         tweenBottle = game.add.tween(bottle).to( { angle: -15 }, 120, Phaser.Easing.Linear.None, true); 
         
         tweenBottle.onComplete.add(function(){ 
+            bottleSfx.play();
             setTimeout(function(){
                 bottle.kill(); 
-                    if (lives == 0){ 
-                        game.state.start('GameOver', false, false, score, save_score());
-                    }
+                if (lives == 0) gameOver();
             }, rndTime);
         
         }, this);
@@ -350,6 +367,14 @@ function physicsBtns(){
         buttons[b].body.gravity.y = game.rnd.integerInRange(-25, 25) * (b + game.rnd.integerInRange(-2, 2));
  
     }    
+}
+
+function gameOver(){
+    waitingSfx.stop();
+    musicSfx.stop();
+    
+    gameOverSfx.play(); 
+    game.state.start('GameOver', false, false, score, save_score()); 
 }
 
 function avatarChosen(avatar){
