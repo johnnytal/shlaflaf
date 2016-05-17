@@ -82,7 +82,7 @@ game_main.prototype = {
         
         labels = [btn_shlaflafLabel, btn_kazabubuLabel, btn_ilyichLabel, btn_nameLabel];
         
-        optionLabel = this.add.text(333, 100, '', {
+        optionLabel = this.add.text(33, 100, '', {
             font: '36px ' + font, fill: 'blue', fontWeight: 'normal', align: 'center', 
             stroke:'lightyellow', strokeThickness: 3
         }); optionLabel.anchor.set(0.5, 0.5);
@@ -410,17 +410,6 @@ function avatarChosen(avatar){
            name = 'PENGUIN';
        break; 
     }
-       
-   /* try{
-        Cocoon.Social.GooglePlayGames.init({
-             defaultLeaderboard: "CgkIv-vN4MUBEAIQBw"
-        });
-        socialService = Cocoon.Social.GooglePlayGames.getSocialInterface();
-        
-        if (googlelogindone == false){
-            socialService.login(function(loggedIn, error) {});
-        }
-    } catch(e){}*/
     
     this.game.state.start("Game");  
 }

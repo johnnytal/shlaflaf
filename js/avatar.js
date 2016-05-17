@@ -38,6 +38,51 @@ avatar.prototype = {
             this.add.text(x+10 + (a*110), y + 85, names[a], {
                 font: '16px ' + font, fill: 'lightblue', align: 'left', stroke:'#000', strokeThickness: 1
             });
-        }    
+        }
+            
+        logInBtn = this.add.sprite(35,380,'logInBtn');
+        logInBtn.scale.set(0.7, 0.7);   
+        
+        logInBtn.inputEnabled = true;
+        logInBtn.input.useHandCursor = true;
+        
+        logInBtn.events.onInputDown.add(function(){ 
+            LogIn();
+        }, this); 
+        
+        leadersBtn = this.add.sprite(115,380,'leadersBtn');
+        leadersBtn.scale.set(0.7, 0.7);   
+        
+        leadersBtn.inputEnabled = true;
+        leadersBtn.input.useHandCursor = true;
+        
+        leadersBtn.events.onInputDown.add(function(){ 
+            showLeaders();
+        }, this); 
     }, 
 };
+
+function LogIn(){
+           
+    try{
+        Cocoon.Social.GooglePlayGames.init({
+             defaultLeaderboard: "CgkIv-vN4MUBEAIQBw"
+        });
+        socialService = Cocoon.Social.GooglePlayGames.getSocialInterface();
+        
+        if (googlelogindone == false){
+            socialService.login(function(loggedIn, error) {});
+        }
+    } catch(e){ alert('There was a problem :('); }
+}
+
+function showLeaders(){
+    try{
+        if (googlelogindone){
+            socialService.showLeaderboard(function(error){});
+        }
+        else{
+            LogIn();
+        }
+    } catch(e){ alert('There was a problem :('); }    
+}

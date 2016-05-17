@@ -12,7 +12,9 @@ game_over.prototype = {
         var bestMessage, message;
         
         try{
-            banner.show();
+            setTimeout(function(){
+                banner.show();    
+            }, 300); 
         } catch(e){}
         
         if (best){
@@ -53,10 +55,10 @@ game_over.prototype = {
                     callback: function () { // menu
                         game.state.start('Preloader');
                         
-                       /* socialService.submitScore( score, function(error){});
-                        socialService.showLeaderboard(function(error){});
+                        socialService.submitScore( score, function(error){});
+                        
       
-                        if (score > 999) socialService.submitAchievement(CgkIv-vN4MUBEAIQAQ, function(error){});*/
+                       // if (score > 999) socialService.submitAchievement(CgkIv-vN4MUBEAIQAQ, function(error){});
 
                     }
                 },            
@@ -68,10 +70,10 @@ game_over.prototype = {
                     callback: function () { // new game
                         game.state.start('Avatar');
                         
-                        /*socialService.submitScore( score, function(error){});
+                        socialService.submitScore( score, function(error){});
                         
-                        if (score > 999) socialService.submitAchievement(CgkIv-vN4MUBEAIQAQ, function(error){});
-                        socialService.showAchievements(function(error){});*/
+                       // if (score > 999) socialService.submitAchievement(CgkIv-vN4MUBEAIQAQ, function(error){});
+                        socialService.showAchievements(function(error){});
                     }
                 }
             ]

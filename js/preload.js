@@ -23,6 +23,8 @@ preloader.prototype = {
         game.load.image('arrow', 'images/arrow.png');
         game.load.image('bottle', 'images/bottle.png');
         game.load.spritesheet('exit_btn', 'images/exit_btn.png', 40, 42);
+        game.load.spritesheet('logInBtn', 'images/logInBtn.png', 278/3, 96);
+        game.load.image('leadersBtn', 'images/leadersBtn.png');
         
         game.load.image('button', 'images/button.png');
         game.load.image('button2', 'images/button2.png');
@@ -103,26 +105,26 @@ preloader.prototype = {
         });
         
         this.add.text(340,  135, "Your name", {
-            font: '23px ' + font, fill: 'purple', align: 'center',
+            font: '23px ' + font, fill: '#885ead', align: 'center',
             stroke:'#fff', strokeThickness: 1
         });
         
         this.add.text(340,  210, "SHLAFLAF", {
-            font: '23px ' + font, fill: '#cc0000', align: 'center',
+            font: '23px ' + font, fill: '#cc5500', align: 'center',
             stroke:'#fff', strokeThickness: 1
         });
         
         this.add.text(340,  285, "ILYICH", {
-            font: '23px ' + font, fill: 'purple', align: 'center',
+            font: '23px ' + font, fill: '#885ead', align: 'center',
             stroke:'#fff', strokeThickness: 1
         });
         
         this.add.text(340,  360, "KAZABUBU", {
-            font: '23px ' + font, fill: '#cc0000', align: 'center',
+            font: '23px ' + font, fill: '#cc5500', align: 'center',
             stroke:'#fff', strokeThickness: 1
         });
         
-        this.add.text(80,  430, "S i m p l e   e n o u g h ?     T a p   t o   c o n t i n ue ! " , {
+        this.add.text(78,  430, "S i m p l e   e n o u g h ?     T a p   t o   c o n t i n u e ! " , {
             font: '23px ' + font, fill: 'darkblue', align: 'center',stroke:'#fff', strokeThickness: 1
         });
     }, 
