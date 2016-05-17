@@ -35,7 +35,7 @@ game_over.prototype = {
                  {
                     type: "image",
                     content: "panel",
-                    contentScale: 1.3
+                    contentScale: 1.35
                 },
                 {
                     type: "text",
@@ -53,13 +53,10 @@ game_over.prototype = {
                     offsetY: 70,
                     offsetX: 60,
                     callback: function () { // menu
-                        game.state.start('Preloader');
-                        
                         socialService.submitScore( score, function(error){});
-                        
-      
-                       // if (score > 999) socialService.submitAchievement(CgkIv-vN4MUBEAIQAQ, function(error){});
+                        game.state.start('Preloader');
 
+                        // if (score > 999) socialService.submitAchievement(CgkIv-vN4MUBEAIQAQ, function(error){});
                     }
                 },            
                 {
@@ -68,12 +65,11 @@ game_over.prototype = {
                     offsetY: 70,
                     offsetX: -60,
                     callback: function () { // new game
+                        socialService.submitScore( score, function(error){});
                         game.state.start('Avatar');
                         
-                        socialService.submitScore( score, function(error){});
-                        
                        // if (score > 999) socialService.submitAchievement(CgkIv-vN4MUBEAIQAQ, function(error){});
-                        socialService.showAchievements(function(error){});
+                       // socialService.showAchievements(function(error){});
                     }
                 }
             ]
