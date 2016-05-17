@@ -82,7 +82,7 @@ game_main.prototype = {
         
         labels = [btn_shlaflafLabel, btn_kazabubuLabel, btn_ilyichLabel, btn_nameLabel];
         
-        optionLabel = this.add.text(33, 100, '', {
+        optionLabel = this.add.text(335, 100, '', {
             font: '36px ' + font, fill: 'blue', fontWeight: 'normal', align: 'center', 
             stroke:'lightyellow', strokeThickness: 3
         }); optionLabel.anchor.set(0.5, 0.5);

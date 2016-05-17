@@ -40,7 +40,7 @@ avatar.prototype = {
             });
         }
             
-        logInBtn = this.add.sprite(35,380,'logInBtn');
+        logInBtn = this.add.sprite(35,375,'logInBtn');
         logInBtn.scale.set(0.7, 0.7);   
         
         logInBtn.inputEnabled = true;
@@ -50,7 +50,7 @@ avatar.prototype = {
             LogIn();
         }, this); 
         
-        leadersBtn = this.add.sprite(115,380,'leadersBtn');
+        leadersBtn = this.add.sprite(115,375,'leadersBtn');
         leadersBtn.scale.set(0.7, 0.7);   
         
         leadersBtn.inputEnabled = true;
@@ -72,6 +72,7 @@ function LogIn(){
         
         if (googlelogindone == false){
             socialService.login(function(loggedIn, error) {});
+            googlelogindone = true;
         }
     } catch(e){ alert('There was a problem :('); }
 }
