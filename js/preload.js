@@ -21,10 +21,10 @@ preloader.prototype = {
         game.load.image('replay', 'images/replay.png');
         game.load.image('inst', 'images/inst.png');
         game.load.image('arrow', 'images/arrow.png');
+        game.load.image('arrow_l', 'images/arrow_l.png');
         game.load.image('bottle', 'images/bottle.png');
         game.load.spritesheet('exit_btn', 'images/exit_btn.png', 40, 42);
-        game.load.spritesheet('logInBtn', 'images/logInBtn.png', 278/3, 96);
-        game.load.image('leadersBtn', 'images/leadersBtn.png');
+        game.load.spritesheet('leadersBtn', 'images/leadersBtn.png', 92, 95);
         
         game.load.image('button', 'images/button.png');
         game.load.image('button2', 'images/button2.png');
@@ -66,8 +66,8 @@ preloader.prototype = {
             font: '28px ' + font, fill: 'blue', align: 'center'
         });
         
-        var ilyich = this.add.image(WIDTH - 135, 185, 'ilyich');
-        ilyich.tint = '0xffeeff';
+        var ilyich = this.add.image(WIDTH - 140, 185, 'ilyich');
+        ilyich.tint = '0xffddff';
         
         for (n = 0; n<4; n++){
             cloud = this.add.image(80, 120 + (75*n), 'cloud');
@@ -89,7 +89,7 @@ preloader.prototype = {
             stroke:'#fff', strokeThickness: 1
         });
         
-        this.add.text(130,  210, "Your name!", {
+        this.add.text(130,  210, "YOUR NAME!", {
             font: '23px ' + font, fill: '#cc0000', align: 'center',
             stroke:'#fff', strokeThickness: 1
         });
@@ -104,7 +104,7 @@ preloader.prototype = {
             stroke:'#fff', strokeThickness: 1
         });
         
-        this.add.text(340,  135, "Your name", {
+        this.add.text(340,  135, "YOUR NAME", {
             font: '23px ' + font, fill: '#885ead', align: 'center',
             stroke:'#fff', strokeThickness: 1
         });

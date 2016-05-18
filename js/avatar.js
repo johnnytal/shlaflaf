@@ -39,41 +39,53 @@ avatar.prototype = {
                 font: '16px ' + font, fill: 'lightblue', align: 'left', stroke:'#000', strokeThickness: 1
             });
         }
-            
-        logInBtn = this.add.sprite(32, 373,'logInBtn');
-        logInBtn.scale.set(0.7, 0.7);   
-        
-        logInBtn.inputEnabled = true;
-        logInBtn.input.useHandCursor = true;
-        
-        logInBtn.events.onInputDown.add(function(){ 
-            LogIn();
-        }, this); 
-        
-        leadersBtn = this.add.sprite(112, 373,'leadersBtn');
+  
+        leadersBtn = this.add.sprite(50, 370,'leadersBtn');
         leadersBtn.scale.set(0.7, 0.7);   
         
         leadersBtn.inputEnabled = true;
         leadersBtn.input.useHandCursor = true;
         
         leadersBtn.events.onInputDown.add(function(){ 
+            leadersBtn.frame = 2;
             showLeaders();
         }, this); 
+        
+        leadersBtn.events.onInputUp.add(function(){ 
+            leadersBtn.frame = 0;
+        }, this); 
+        
+        var logInText;
+        
+        if (googlelogindone){
+            leadersBtn.frame = 1;
+            logInText = 'See the Leaderboard!';
+        }
+        else{
+            leadersBtn.frame = 0;
+            logInText = 'Log In to see the Leaderboard!';
+        }
+        
+        this.add.text(120, 380, logInText, {
+            font: '13px ' + font, fill: 'darkblue', align: 'left', stroke:'#fff', strokeThickness: 1
+        });
+        
+        arrowL = this.add.image(120, 400,'arrow_l');
+        arrowL.scale.set(0.7, 0.7); 
     }, 
 };
 
-function LogIn(){
-           
+function LogIn(){          
     try{
         Cocoon.Social.GooglePlayGames.init({
              defaultLeaderboard: "CgkIv-vN4MUBEAIQBw"
         });
         socialService = Cocoon.Social.GooglePlayGames.getSocialInterface();
+
+        socialService.login(function(loggedIn, error) {});
+        googlelogindone = true;
+        leadersBtn.frame = 1;
         
-        if (googlelogindone == false){
-            socialService.login(function(loggedIn, error) {});
-            googlelogindone = true;
-        }
     } catch(e){ alert('There was a problem :('); }
 }
 

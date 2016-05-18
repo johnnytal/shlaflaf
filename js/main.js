@@ -31,7 +31,7 @@ game_main.prototype = {
         time_left = 100;
         init_time = time_left;
         
-        var ilyich = this.add.image(WIDTH - 135, 190, 'ilyich');
+        var ilyich = this.add.image(WIDTH - 132, 190, 'ilyich');
         var avatar = this.add.sprite(15, 200, 'avatars');
         avatar.frame = frame;
         
@@ -94,7 +94,8 @@ game_main.prototype = {
         });
         
         scoreLabel = this.add.text(18, 25, 'Score: ' + score, {
-            font: '26px ' + font, fill: 'darkgreen', fontWeight: 'normal', align: 'center'
+            font: '26px ' + font, fill: 'darkgreen', fontWeight: 'normal', align: 'center',
+            stroke:'lightyellow', strokeThickness: 2
         });
         
         exit_btn = this.add.button(580, 425, 'exit_btn');       
@@ -102,22 +103,23 @@ game_main.prototype = {
         exit_btn.input.useHandCursor = true;
         
         exit_btn.events.onInputDown.add(function(){ 
-            gameOver();
+            exit_btn.inputEnabled = false;
+            gameOver(); 
         }, this);
         
         barksSfx = [
-            game.add.audio('bark1', 0.7, false),
-            game.add.audio('bark2', 0.7, false),
-            game.add.audio('bark3', 0.7, false),
-            game.add.audio('bark4', 0.7, false)
+            game.add.audio('bark1', 0.6, false),
+            game.add.audio('bark2', 0.6, false),
+            game.add.audio('bark3', 0.6, false),
+            game.add.audio('bark4', 0.6, false)
         ];
         
-        bottleSfx = game.add.audio('bottle');
-        clickSfx = game.add.audio('click');
-        failSfx = game.add.audio('fail');
-        gameOverSfx = game.add.audio('gameOver');
+        bottleSfx = game.add.audio('bottle', 1, false);
+        clickSfx = game.add.audio('click', 1, false);
+        failSfx = game.add.audio('fail', 0.8, false);
+        gameOverSfx = game.add.audio('gameOver', 0.7, false);
         musicSfx = game.add.audio('music', 1, true);
-        successSfx = game.add.audio('success');
+        successSfx = game.add.audio('success', 0.7, false);
         waitingSfx = game.add.audio('waiting', 0.2, false);
         
         createOption(); 

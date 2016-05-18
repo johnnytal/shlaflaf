@@ -14,7 +14,11 @@ game_over.prototype = {
         try{
             setTimeout(function(){
                 banner.show();    
-            }, 300); 
+            }, 400); 
+        } catch(e){}
+        
+        try{
+            socialService.submitScore( score, function(error){});
         } catch(e){}
         
         if (best){
@@ -43,7 +47,7 @@ game_over.prototype = {
                     fontFamily: font,
                     fontSize: 36,
                     offsetY: -100,
-                    color: "0xffff00",
+                    color: "0x00ff00",
                     stroke: "0xff0000",
                     strokeThickness: 2
                 },
@@ -53,7 +57,7 @@ game_over.prototype = {
                     offsetY: 70,
                     offsetX: 60,
                     callback: function () { // menu
-                        socialService.submitScore( score, function(error){});
+
                         game.state.start('Preloader');
 
                         // if (score > 999) socialService.submitAchievement(CgkIv-vN4MUBEAIQAQ, function(error){});
@@ -65,7 +69,7 @@ game_over.prototype = {
                     offsetY: 70,
                     offsetX: -60,
                     callback: function () { // new game
-                        socialService.submitScore( score, function(error){});
+
                         game.state.start('Avatar');
                         
                        // if (score > 999) socialService.submitAchievement(CgkIv-vN4MUBEAIQAQ, function(error){});
