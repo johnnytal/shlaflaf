@@ -52,7 +52,8 @@ avatar.prototype = {
         }, this); 
         
         leadersBtn.events.onInputUp.add(function(){ 
-            leadersBtn.frame = 0;
+            if (!googlelogindone) leadersBtn.frame = 0;
+            else { leadersBtn.frame = 1; }
         }, this); 
         
         var logInText;
