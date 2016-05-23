@@ -18,7 +18,12 @@ game_over.prototype = {
         } catch(e){}
         
         try{
+            if (!googlelogindone){
+                LogIn();
+            }
+
             socialService.submitScore( score, function(error){});
+            
         } catch(e){}
         
         if (best){

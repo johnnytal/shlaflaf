@@ -84,45 +84,57 @@ preloader.prototype = {
             font: '25px ' + font, fill: 'darkgreen', align: 'center'
         });
         
-        this.add.text(130,  135, "SHLAFLAF!", {
+        textA1 = this.add.text(130,  135, "SHLAFLAF!", {
             font: '23px ' + font, fill: 'purple', align: 'center',
             stroke:'#fff', strokeThickness: 1
         });
         
-        this.add.text(130,  210, "YOUR NAME!", {
+        textA2 = this.add.text(130,  210, "YOUR NAME!", {
             font: '23px ' + font, fill: '#cc0000', align: 'center',
             stroke:'#fff', strokeThickness: 1
         });
         
-        this.add.text(130,  285, "KAZABUBU!", {
+        textB1 = this.add.text(130,  285, "KAZABUBU!", {
             font: '23px ' + font, fill: 'purple', align: 'center',
             stroke:'#fff', strokeThickness: 1
         });
         
-        this.add.text(130,  360, "ILYICH!", {
+        textB2 = this.add.text(130,  360, "ILYICH!", {
             font: '23px ' + font, fill: '#cc0000', align: 'center',
             stroke:'#fff', strokeThickness: 1
         });
         
-        this.add.text(340,  135, "YOUR NAME", {
+        textC1 = this.add.text(340,  135, "YOUR NAME", {
             font: '23px ' + font, fill: '#885ead', align: 'center',
             stroke:'#fff', strokeThickness: 1
         });
         
-        this.add.text(340,  210, "SHLAFLAF", {
+        textC2 = this.add.text(340,  210, "SHLAFLAF", {
             font: '23px ' + font, fill: '#cc5500', align: 'center',
             stroke:'#fff', strokeThickness: 1
         });
         
-        this.add.text(340,  285, "ILYICH", {
+        textD1 = this.add.text(340,  285, "ILYICH", {
             font: '23px ' + font, fill: '#885ead', align: 'center',
             stroke:'#fff', strokeThickness: 1
         });
         
-        this.add.text(340,  360, "KAZABUBU", {
+        textD2 = this.add.text(340,  360, "KAZABUBU", {
             font: '23px ' + font, fill: '#cc5500', align: 'center',
             stroke:'#fff', strokeThickness: 1
         });
+        
+        game.add.tween(textA1).from( { x: -500 }, 150, Phaser.Easing.Sinusoidal.InOut, true); 
+        game.add.tween(textA2).from( { x: -500  }, 350, Phaser.Easing.Sinusoidal.InOut, true); 
+        
+        game.add.tween(textB1).from( { x: -500 }, 750, Phaser.Easing.Sinusoidal.InOut, true); 
+        game.add.tween(textB2).from( { x: -500  }, 1150, Phaser.Easing.Sinusoidal.InOut, true); 
+        
+        game.add.tween(textC1).from( { x: WIDTH + 330 }, 350, Phaser.Easing.Sinusoidal.InOut, true); 
+        game.add.tween(textC2).from( { x: WIDTH + 330 }, 550, Phaser.Easing.Sinusoidal.InOut, true); 
+        
+        game.add.tween(textD1).from( { x: WIDTH + 330 }, 950, Phaser.Easing.Sinusoidal.InOut, true); 
+        game.add.tween(textD2).from( { x: WIDTH + 330}, 1350, Phaser.Easing.Sinusoidal.InOut, true); 
         
         this.add.text(78,  430, "S i m p l e   e n o u g h ?     T a p   t o   c o n t i n u e ! " , {
             font: '23px ' + font, fill: 'darkblue', align: 'center',stroke:'#fff', strokeThickness: 1
