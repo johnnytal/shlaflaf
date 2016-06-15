@@ -34,6 +34,7 @@ boot.prototype = {
         name = '';
         googlelogindone = false;
         var socialService;
+        var interstitial;
 
         if (this.game.device.desktop){
             this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
