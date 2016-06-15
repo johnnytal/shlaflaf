@@ -10,21 +10,28 @@ game_over.prototype = {
     
     init: function(score, best){
         var bestMessage, message;
-        
-        try{
-            setTimeout(function(){
-                banner.show();    
-            }, 400); 
-        } catch(e){}
-        
-        try{
-            if (!googlelogindone){
-                LogIn();
-            }
 
+        if (googlelogindone){
             socialService.submitScore( score, function(error){});
-            
-        } catch(e){}
+        }
+                
+        else{
+            try{
+                Cocoon.Social.GooglePlayGames.init({
+                     defaultLeaderboard: "CgkIv-vN4MUBEAIQBw"
+                });
+                
+                socialService = Cocoon.Social.GooglePlayGames.getSocialInterface();
+        
+                socialService.login(function(loggedIn, error) {
+                    if (loggedIn) {
+                        googlelogindone = true;
+                        socialService.submitScore( score, function(error){});
+                    }   
+                });
+            } catch(e){}
+        }      
+
         
         if (best){
             bestMessage = '\n New high score!';
@@ -51,7 +58,7 @@ game_over.prototype = {
                     content: message,
                     fontFamily: font,
                     fontSize: 36,
-                    offsetY: -100,
+                    offsetY: -80,
                     color: "0x00ff00",
                     stroke: "0xff0000",
                     strokeThickness: 2
@@ -62,7 +69,10 @@ game_over.prototype = {
                     offsetY: 70,
                     offsetX: 60,
                     callback: function () { // menu
-
+                        try{
+                            if (!bannerNotCraeted) interstitial.show();
+                        }
+                        catch(e){}
                         game.state.start('Preloader');
 
                         // if (score > 999) socialService.submitAchievement(CgkIv-vN4MUBEAIQAQ, function(error){});
@@ -74,7 +84,10 @@ game_over.prototype = {
                     offsetY: 70,
                     offsetX: -60,
                     callback: function () { // new game
-
+                        try{
+                            if (!bannerNotCraeted) interstitial.show();
+                        }
+                        catch(e){}
                         game.state.start('Avatar');
                         
                        // if (score > 999) socialService.submitAchievement(CgkIv-vN4MUBEAIQAQ, function(error){});

@@ -56,7 +56,7 @@ game_main.prototype = {
             buttons[b].scale.set(1.05, 1.05);
         }
         
-        bestScore = localStorage.getItem("shlaflaf-bestScore");
+        bestScore = Math.round(localStorage.getItem("shlaflaf-bestScore"));
         if (bestScore == null) bestScore = 0;
         
         bestScoreLebal = this.add.text(20, 440, 'High Score: ' + bestScore, {
@@ -125,23 +125,17 @@ game_main.prototype = {
         createOption(); 
         
         modal = new gameModal(game);
-        
-        try{banner.hide();} catch(e){}
-        
+
         if (bannerNotCraeted){
             try{
                 Cocoon.Ad.AdMob.configure({
                     android: { 
-                          banner:"ca-app-pub-9795366520625065/8387859836"
+                        interstitial:"ca-app-pub-9795366520625065/9227941433"
                     }
                 });
-                
-                banner = Cocoon.Ad.AdMob.createBanner();
-                banner.load();
-                
-                banner.on("load", function(){
-                    banner.setLayout( Cocoon.Ad.BannerLayout.BOTTOM_CENTER );
-                });
+
+                interstitial = Cocoon.Ad.AdMob.createInterstitial();
+                interstitial.load();
                 
                 bannerNotCraeted = false;
             } catch(e){}

@@ -22,9 +22,7 @@ function start(){
 var boot = function(game){};
 
 boot.prototype = {
-    preload: function(){
-
-    },
+    preload: function(){},
     
     create: function(){  
         font = 'Luckiest Guy';      
@@ -60,5 +58,3 @@ boot.prototype = {
         game.state.start('Preloader');
     }
 };
-
-

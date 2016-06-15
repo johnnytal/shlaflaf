@@ -13,7 +13,7 @@ avatar.prototype = {
         bg.alpha = 0.8;
              
         this.add.text(60, 40, "C h o o s e   A v a t a r   T o   S t a r t   P l a y i n g  :", {
-            font: '24px ' + font, fill: '#cc0000', align: 'center'
+            font: '24px ' + font, fill: '#cc0000', align: 'center', stroke: "lightgrey", strokeThickness: 1
         });     
         
         names = ['  snake', '  hippo', ' rabbit', 'giraffe', '     pig', 'parrot', 'penguin'];
@@ -41,21 +41,22 @@ avatar.prototype = {
         }
   
         leadersBtn = this.add.sprite(50, 370,'leadersBtn');
-        leadersBtn.scale.set(0.7, 0.7);   
-        
         leadersBtn.inputEnabled = true;
         leadersBtn.input.useHandCursor = true;
-        
+
         leadersBtn.events.onInputDown.add(function(){ 
             leadersBtn.frame = 2;
-            showLeaders();
+            
+            if (!googlelogindone) LogIn();
+            else if (googlelogindone) showLeaders();
+            
         }, this); 
         
         leadersBtn.events.onInputUp.add(function(){ 
             if (!googlelogindone) leadersBtn.frame = 0;
             else { leadersBtn.frame = 1; }
         }, this); 
-        
+
         var logInText;
         
         if (googlelogindone){
@@ -67,12 +68,13 @@ avatar.prototype = {
             logInText = 'Log In to see the Leaderboard!';
         }
         
-        this.add.text(120, 380, logInText, {
-            font: '13px ' + font, fill: 'darkblue', align: 'left', stroke:'#fff', strokeThickness: 1
+        logText = this.add.text(125, 390, logInText, {
+            font: '12px ' + font, fill: 'darkblue', align: 'left', stroke:'#fff', strokeThickness: 1
         });
         
-        arrowL = this.add.image(120, 400,'arrow_l');
-        arrowL.scale.set(0.7, 0.7); 
+        logText.angle = 10;
+        
+        arrowL = this.add.image(125, 410,'arrow_l');
     }, 
 };
 
@@ -81,22 +83,24 @@ function LogIn(){
         Cocoon.Social.GooglePlayGames.init({
              defaultLeaderboard: "CgkIv-vN4MUBEAIQBw"
         });
+        
         socialService = Cocoon.Social.GooglePlayGames.getSocialInterface();
 
-        socialService.login(function(loggedIn, error) {});
-        googlelogindone = true;
-        leadersBtn.frame = 1;
-        
-    } catch(e){ alert('There was a problem :('); }
+        socialService.login(function(loggedIn, error) {
+            if (error) {
+                alert('There was a problem :(');
+            }
+            else if (loggedIn) {
+                googlelogindone = true;
+                leadersBtn.frame = 1;
+                showLeaders();
+            }   
+        });
+    } catch(e){}
 }
 
 function showLeaders(){
     try{
-        if (googlelogindone){
-            socialService.showLeaderboard(function(error){});
-        }
-        else{
-            LogIn();
-        }
+        socialService.showLeaderboard(function(error){});    
     } catch(e){ alert('There was a problem :('); }    
 }

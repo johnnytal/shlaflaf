@@ -24,7 +24,7 @@ preloader.prototype = {
         game.load.image('arrow_l', 'images/arrow_l.png');
         game.load.image('bottle', 'images/bottle.png');
         game.load.spritesheet('exit_btn', 'images/exit_btn.png', 40, 42);
-        game.load.spritesheet('leadersBtn', 'images/leadersBtn.png', 92, 95);
+        game.load.spritesheet('leadersBtn', 'images/leadersBtn.png', 193/3, 66);
         
         game.load.image('button', 'images/button.png');
         game.load.image('button2', 'images/button2.png');
@@ -62,12 +62,15 @@ preloader.prototype = {
         var bg = this.add.image(0, 0, 'bg');
         bg.alpha = 0.6;
         
-        this.add.text(this.game.world.centerX - 130,  15, "H o w    t o    p l a y  ?", {
-            font: '28px ' + font, fill: 'blue', align: 'center'
+        logo = this.add.text(315,  35, "H o w    t o    p l a y   S H L A F L A F ?", {
+            font: '32px ' + font, fill: 'darkred', align: 'center', stroke: "white", strokeThickness: 3
         });
+        logo.anchor.set(0.5, 0.5);
+        
+        game.add.tween(logo).from( { alpha: 0}, 2800, Phaser.Easing.Sinusoidal.InOut, true);
+        game.add.tween(logo.scale).from( { x: 1.8, y: 1.8}, 2600, Phaser.Easing.Sinusoidal.InOut, true);
         
         var ilyich = this.add.image(WIDTH - 140, 185, 'ilyich');
-        ilyich.tint = '0xffddff';
         
         for (n = 0; n<4; n++){
             cloud = this.add.image(80, 120 + (75*n), 'cloud');
@@ -76,11 +79,11 @@ preloader.prototype = {
             arrow = this.add.image(230, 140 + (75*n), 'arrow');
         }
         
-        this.add.text(80,  70, "i L y i c h   s a y s :", {
+        this.add.text(70,  80, "i L y i c h   s a y s :", {
             font: '25px ' + font, fill: 'darkgreen', align: 'center'
         });
         
-        this.add.text(330,  70, "Y o u   h a v e   t o   s a y :", {
+        this.add.text(320,  80, "Y o u   h a v e   t o   s a y :", {
             font: '25px ' + font, fill: 'darkgreen', align: 'center'
         });
         
@@ -136,7 +139,7 @@ preloader.prototype = {
         game.add.tween(textD1).from( { x: WIDTH + 330 }, 950, Phaser.Easing.Sinusoidal.InOut, true); 
         game.add.tween(textD2).from( { x: WIDTH + 330}, 1350, Phaser.Easing.Sinusoidal.InOut, true); 
         
-        this.add.text(78,  430, "S i m p l e   e n o u g h ?     T a p   t o   c o n t i n u e ! " , {
+        this.add.text(65,  430, "S i m p l e   e n o u g h ?     T a p   t o   c o n t i n u e ! " , {
             font: '23px ' + font, fill: 'darkblue', align: 'center',stroke:'#fff', strokeThickness: 1
         });
     }, 
