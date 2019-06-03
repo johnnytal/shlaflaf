@@ -12,11 +12,9 @@ avatar.prototype = {
         var bg = this.add.image(0, 0, 'bg');
         bg.alpha = 0.8;
              
-        this.add.text(60, 40, "C h o o s e   A v a t a r   T o   S t a r t   P l a y i n g  :", {
+        this.add.text(150, 40, ": ב ח ר   ש מ א ל ן   כ ד י   ל ה ת ח י ל   ל ש ח ק", {
             font: '24px ' + font, fill: '#cc0000', align: 'center', stroke: "lightgrey", strokeThickness: 1
         });     
-        
-        names = ['  snake', '  hippo', ' rabbit', 'giraffe', '     pig', 'parrot', 'penguin'];
         
         for (a=0; a<7; a++){
             if (a > 3){
@@ -34,10 +32,6 @@ avatar.prototype = {
             avatars[a].inputEnabled = true;
             avatars[a].input.useHandCursor = true;
             avatars[a].events.onInputDown.add(avatarChosen, this);
-            
-            this.add.text(x+10 + (a*110), y + 85, names[a], {
-                font: '16px ' + font, fill: 'lightblue', align: 'left', stroke:'#000', strokeThickness: 1
-            });
         }
   
         leadersBtn = this.add.sprite(50, 370,'leadersBtn');

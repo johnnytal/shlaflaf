@@ -12,8 +12,11 @@ var game_main = function(game){
     lives = 3;
     lifeSprite = [];
     time_factor = 0;
-    time_left = 100;
+    time_left = 150;
     init_time = time_left;
+    
+    options1A = ['ליברמן' , 'גנץ', 'התקשורת', 'בוגי', 'גדעון  סער', 'ריבלין', 'לפיד'];
+    options1B = ['מסע  ציד' , 'רדיפה  פוליטית', 'לא יהיה כלום', 'קנוניה'];
 };
 
 game_main.prototype = {
@@ -21,24 +24,24 @@ game_main.prototype = {
         var bg = this.add.image(0, 0, 'bg');
         bg.alpha = 0.7;
         
-        var cloud = this.add.image(130, 50, 'cloud');
+        var cloud = this.add.image(130, 45, 'cloud');
         cloud.alpha = 0.7;
         cloud.scale.set(0.72, 0.38);
 
         lives = 3;
         score = 0;
         time_factor = 0;
-        time_left = 100;
+        time_left = 150;
         init_time = time_left;
         
-        var ilyich = this.add.image(WIDTH - 132, 190, 'ilyich');
-        var avatar = this.add.sprite(15, 200, 'avatars');
+        var ilyich = this.add.image(15, 175, 'ilyich');
+        var avatar = this.add.sprite(WIDTH - 132, 200, 'avatars');
         avatar.frame = frame;
         
         for (l=0; l<lives; l++){
-            lifeSprite[l] = this.add.sprite(490 + (l*45), 22, 'avatars');
+            lifeSprite[l] = this.add.sprite(490 + (l*45), 22, 'ilyich');
             lifeSprite[l].frame = frame;
-            lifeSprite[l].scale.set(0.3, 0.3);
+            lifeSprite[l].scale.set(0.2, 0.2);
         }
 
         var btn_shlaflaf = this.add.sprite(155, 185, 'button');
@@ -47,7 +50,7 @@ game_main.prototype = {
         var btn_name = this.add.sprite(155, 260, 'button4');
         
         buttons = [btn_shlaflaf, btn_kazabubu, btn_ilyich, btn_name];
-        options = ['S h l a f l a f !', 'K a z a b u b u !', 'I L Y I C H !', nameS + ' !'];
+        options = [];
 
         for (b=0; b<buttons.length; b++){
             buttons[b].inputEnabled = true;
@@ -64,19 +67,19 @@ game_main.prototype = {
             stroke:'#000', strokeThickness: 1
         });
 
-        btn_shlaflafLabel = this.add.text(235, 221, 'Shlaflaf', {
+        btn_shlaflafLabel = this.add.text(235, 221, 'כתב אישום', {
             font: '25px ' + font, fill: '#cc0000', fontWeight: 'normal', align: 'center'
         }); btn_shlaflafLabel.anchor.set(0.5, 0.5);
         
-        btn_kazabubuLabel = this.add.text(415, 220, 'Kazabubu', {
+        btn_kazabubuLabel = this.add.text(415, 220, 'שמאל', {
             font: '25px ' + font, fill: '#cc0000', fontWeight: 'normal', align: 'center'
         }); btn_kazabubuLabel.anchor.set(0.5, 0.5);
         
-        btn_ilyichLabel = this.add.text(415, 298, 'ILYICH', {
+        btn_ilyichLabel = this.add.text(415, 298, options1B[game.rnd.integerInRange(0, options1B.length-1)], {
             font: '25px ' + font, fill: '#cc0000', fontWeight: 'normal', align: 'center'
         }); btn_ilyichLabel.anchor.set(0.5, 0.5);
        
-        btn_nameLabel = this.add.text(235, 300, name, {
+        btn_nameLabel = this.add.text(235, 300, options1A[game.rnd.integerInRange(0, options1A.length-1)], {
             font: '25px ' + font, fill: '#cc0000', fontWeight: 'normal', align: 'center'
         }); btn_nameLabel.anchor.set(0.5, 0.5);
         
@@ -224,11 +227,29 @@ function createOption(){
     optionLabel.fill = '#1874CD';
     
     option_to_create = game.rnd.integerInRange(0, 3);
-    optionLabel.text = options[option_to_create];
-
-    time_factor += 1;
+	
+	var randomOptionA = 0;
+	var randomOptionB = 0;
+	
+    if (option_to_create > 1){
+    	randomOptionA = game.rnd.integerInRange(0, options1A.length-1);
+    	randomOptionB = game.rnd.integerInRange(0, options1B.length-1);
+    }
     
-    time_left = 100 - time_factor;
+    options = ['! ש מ א ל',
+        '! כ ת ב  א י ש ו ם',
+        ' !' + options1A[randomOptionA],
+        ' !' + options1B[randomOptionB]
+    ];
+    
+    optionLabel.text = options[option_to_create];
+    
+    btn_ilyichLabel.text = options1B[randomOptionB]; 
+    btn_nameLabel.text = options1A[randomOptionA];
+
+    time_factor += 2;
+    
+    time_left = 150 - time_factor;
     init_time = time_left;
     
     if (init_time < 90 && init_time >= 75) randomizeBtns(false);
@@ -378,32 +399,32 @@ function avatarChosen(avatar){
     
     switch(avatar.frame){
        case 0:
-           nameS = 'S N A K E';
-           name = 'SNAKE';
+           nameS = 'ל י ב ר מ ן';
+           name = 'ליברמן';
        break; 
        case 1:
-           nameS = 'H I P P O';
-           name = 'HIPPO';
+           nameS = 'ג נ ץ';
+           name = 'גנץ';
        break; 
        case 2:
-           nameS = 'R A B B I T';
-           name = 'RABBIT';
+           nameS = 'ג ד ע ו ן  ס ע ר';
+           name = 'גדעון סער';
        break; 
        case 3:
-           nameS = 'G I R A F F E';
-           name = 'GIRAFFE';
+           nameS = 'ר י ב ל י ן';
+           name = 'ריבלין';
        break; 
        case 4:
-           nameS = 'P I G';
-           name = 'PIG';
+           nameS = 'ב ו ג י';
+           name = 'בוגי';
        break; 
        case 5:
-           nameS = 'P A R R O T';
-           name = 'PARROT';
+           nameS = 'ל פ י ד';
+           name = 'לפיד';
        break; 
        case 6:
-           nameS = 'P E N G U I N';
-           name = 'PENGUIN';
+           nameS = 'ה ת ק ש ו ר ת';
+           name = 'התקשורת';
        break; 
     }
     
