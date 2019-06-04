@@ -24,20 +24,16 @@ var boot = function(game){};
 boot.prototype = {
     preload: function(){},
     
-    create: function(){  
-        font = 'Luckiest Guy';      
+    create: function(){     
         game.stage.backgroundColor = '#f1f1f1';
 
         frame = 0;
-        name = '';
 
         if (this.game.device.desktop){
             this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-            
-            var factor = 1.1;
-            
-            this.scale.maxWidth = w / factor; 
-            this.scale.maxHeight = h / factor; 
+ 
+            this.scale.maxWidth = w; 
+            this.scale.maxHeight = h; 
             
             this.game.scale.pageAlignHorizontally = true;
         } 

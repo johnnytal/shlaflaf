@@ -65,33 +65,32 @@ game_main.prototype = {
         if (bestScore == null) bestScore = 0;
         
         bestScoreLebal = this.add.text(20, 440, bestScore + ' :השיא שלך', {
-            font: '21px ' + font, fill: 'darkblue', fontWeight: 'normal', align: 'center'
+            font: '21px', fill: 'white', align: 'center'
         });
 
         btn_kazabubuLabel = this.add.text(415, 220, 'שמאלן', {
-            font: '25px ' + font, fill: '#cc0000', fontWeight: 'normal', align: 'center'
+            font: '25px', fill: '#cc0000', align: 'center'
         }); btn_kazabubuLabel.anchor.set(0.5, 0.5);
 
         btn_nameLabel = this.add.text(235, 220, options1A[game.rnd.integerInRange(0, options1A.length-1)], {
-            font: '25px ' + font, fill: '#cc0000', fontWeight: 'normal', align: 'center'
+            font: '25px', fill: '#cc0000', align: 'center'
         }); btn_nameLabel.anchor.set(0.5, 0.5);
         
         labels = [btn_kazabubuLabel, btn_nameLabel];
         
         optionLabel = this.add.text(335, 100, '', {
-            font: '36px ' + font, fill: 'blue', fontWeight: 'normal', align: 'center', 
-            stroke:'lightyellow', strokeThickness: 3
+            font: '38px', fill: 'blue', align: 'center', 
+
         }); optionLabel.anchor.set(0.5, 0.5);
         
         optionLabel.setShadow(1, 1, 'rgba(0,0,0,0.4)', 5);
         
-        timeLabel = this.add.text(280, 10, 'T i m e: ' + time_left, {
-            font: '22px ' + font, fill: 'red', fontWeight: 'normal', align: 'center'
+        timeLabel = this.add.text(280, 10, time_left + ':ז מ ן', {
+            font: '22px', fill: 'red', align: 'center'
         });
         
-        scoreLabel = this.add.text(18, 25, 'Score: ' + score, {
-            font: '26px ' + font, fill: 'darkgreen', fontWeight: 'normal', align: 'center',
-            stroke:'lightyellow', strokeThickness: 2
+        scoreLabel = this.add.text(18, 25, score + " :ניקוד", {
+            font: '26px', fill: 'darkgreen', align: 'center', stroke:'lightyellow', strokeThickness: 2
         });
         
         exit_btn = this.add.button(580, 425, 'exit_btn');       
@@ -207,7 +206,7 @@ function createOption(){
     
     option_to_create = game.rnd.integerInRange(0, 1);
     
-    options = ['! ש מ א ל ן', ' !' + options1A[game.rnd.integerInRange(0, options1A.length-1)]];
+    options = ['!שמאלן', ' !' + options1A[game.rnd.integerInRange(0, options1A.length-1)]];
     
     optionLabel.text = options[option_to_create];
 

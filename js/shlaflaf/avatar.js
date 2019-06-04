@@ -5,10 +5,9 @@ avatar.prototype = {
         avatars = [];
         
         var bg = this.add.image(0, 0, 'bg');
-        bg.alpha = 0.8;
              
-        this.add.text(150, 40, ": ב ח ר   ש מ א ל ן   כ ד י   ל ה ת ח י ל   ל ש ח ק", {
-            font: '24px ' + font, fill: '#cc0000', align: 'center', stroke: "lightgrey", strokeThickness: 1
+        this.add.text(100, 40, ": ב ח ר   ש מ א ל ן   כ ד י   ל ה ת ח י ל   ל ש ח ק", {
+            font: '32px', fill: '#cc0000', align: 'center', stroke: "lightgrey", strokeThickness: 1
         });     
         
         for (a=0; a<7; a++){
