@@ -3,38 +3,16 @@ var game_over = function(game){};
 game_over.prototype = {
 
     preload: function(){
-        timeLabel.text = 'T i m e : 00';
+        timeLabel.text = '';
         clearInterval(timer);
         optionLabel.text = 'GAME OVER!';
     },
     
     init: function(score, best){
-        var bestMessage, message;
+        var bestMessage, message; 
 
-        if (googlelogindone){
-            socialService.submitScore( score, function(error){});
-        }
-                
-        else{
-            try{
-                Cocoon.Social.GooglePlayGames.init({
-                     defaultLeaderboard: "CgkIv-vN4MUBEAIQBw"
-                });
-                
-                socialService = Cocoon.Social.GooglePlayGames.getSocialInterface();
-        
-                socialService.login(function(loggedIn, error) {
-                    if (loggedIn) {
-                        googlelogindone = true;
-                        socialService.submitScore( score, function(error){});
-                    }   
-                });
-            } catch(e){}
-        }      
-
-        
         if (best){
-            bestMessage = '\n New high score!';
+            bestMessage = '\n !שיא חדש';
         }
         else{
             bestMessage = '';
@@ -69,13 +47,8 @@ game_over.prototype = {
                     offsetY: 70,
                     offsetX: 60,
                     callback: function () { // menu
-                        try{
-                            if (!bannerNotCraeted) interstitial.show();
-                        }
-                        catch(e){}
+                        try{if(AdMob) AdMob.showInterstitial(); AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);} catch(e){}
                         game.state.start('Preloader');
-
-                        // if (score > 999) socialService.submitAchievement(CgkIv-vN4MUBEAIQAQ, function(error){});
                     }
                 },            
                 {
@@ -84,14 +57,8 @@ game_over.prototype = {
                     offsetY: 70,
                     offsetX: -60,
                     callback: function () { // new game
-                        try{
-                            if (!bannerNotCraeted) interstitial.show();
-                        }
-                        catch(e){}
+						try{if(AdMob) AdMob.showInterstitial(); AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);} catch(e){}
                         game.state.start('Avatar');
-                        
-                       // if (score > 999) socialService.submitAchievement(CgkIv-vN4MUBEAIQAQ, function(error){});
-                       // socialService.showAchievements(function(error){});
                     }
                 }
             ]

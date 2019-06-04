@@ -1,5 +1,5 @@
-//document.addEventListener("deviceready", start, false);
-window.onload = start;
+document.addEventListener("deviceready", start, false);
+//window.onload = start;
 
 function start(){
     WIDTH = 640; 
@@ -27,14 +27,9 @@ boot.prototype = {
     create: function(){  
         font = 'Luckiest Guy';      
         game.stage.backgroundColor = '#f1f1f1';
-        
-        bannerNotCraeted = true;
-        
+
         frame = 0;
         name = '';
-        googlelogindone = false;
-        var socialService;
-        var interstitial;
 
         if (this.game.device.desktop){
             this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;

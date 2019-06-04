@@ -7,6 +7,7 @@ var game_main = function(game){
     cordsArray = [cords1, cords2];
     
     crazy = false;
+    //doubleCrazy = false;
     
     score = 0;
     lives = 3;
@@ -18,11 +19,13 @@ var game_main = function(game){
     RND_TIME = 137;
     CRZ_TIME = 112;
     
-    options1A = ['ליברמן' , 'גנץ', 'התקשורת', 'בוגי', 'סער', 'ריבלין', 'לפיד'];
+    options1A = ['ליברמן' , 'גנץ', 'התקשורת', 'בוגי', 'סער', 'ריבלין', 'לפיד', 'מנדלבליט', 'בית המשפט', 'אובמה', 'אלשיך'];
 };
 
 game_main.prototype = {
     create: function(){
+    	try{AdMob.hideBanner();} catch(e){}
+    	
         var bg = this.add.image(0, 0, 'bg');
         bg.alpha = 0.7;
         
@@ -43,7 +46,6 @@ game_main.prototype = {
         
         for (l=0; l<lives; l++){
             lifeSprite[l] = this.add.sprite(490 + (l*45), 22, 'ilyich');
-            lifeSprite[l].frame = frame;
             lifeSprite[l].scale.set(0.2, 0.2);
         }
 
@@ -51,7 +53,6 @@ game_main.prototype = {
         var btn_name = this.add.sprite(155, 185, 'button2');
         
         buttons = [btn_kazabubu, btn_name];
-        options = [];
 
         for (b=0; b<buttons.length; b++){
             buttons[b].inputEnabled = true;
@@ -63,12 +64,11 @@ game_main.prototype = {
         bestScore = Math.round(localStorage.getItem("shlaflaf-bestScore"));
         if (bestScore == null) bestScore = 0;
         
-        bestScoreLebal = this.add.text(20, 440, 'High Score: ' + bestScore, {
-            font: '17px ' + font, fill: 'yellow', fontWeight: 'normal', align: 'center',
-            stroke:'#000', strokeThickness: 1
+        bestScoreLebal = this.add.text(20, 440, bestScore + ' :השיא שלך', {
+            font: '21px ' + font, fill: 'darkblue', fontWeight: 'normal', align: 'center'
         });
 
-        btn_kazabubuLabel = this.add.text(415, 220, 'שמאל', {
+        btn_kazabubuLabel = this.add.text(415, 220, 'שמאלן', {
             font: '25px ' + font, fill: '#cc0000', fontWeight: 'normal', align: 'center'
         }); btn_kazabubuLabel.anchor.set(0.5, 0.5);
 
@@ -101,6 +101,7 @@ game_main.prototype = {
         exit_btn.events.onInputDown.add(function(){ 
             exit_btn.inputEnabled = false;
             gameOver(); 
+            if(AdMob) AdMob.showInterstitial();
         }, this);
         
         barksSfx = [
@@ -121,23 +122,10 @@ game_main.prototype = {
         createOption(); 
         
         modal = new gameModal(game);
-
-        if (bannerNotCraeted){
-            try{
-                Cocoon.Ad.AdMob.configure({
-                    android: { 
-                        interstitial:"ca-app-pub-9795366520625065/9227941433"
-                    }
-                });
-
-                interstitial = Cocoon.Ad.AdMob.createInterstitial();
-                interstitial.load();
-                
-                bannerNotCraeted = false;
-            } catch(e){}
-        }
         
         setTimeout(function(){musicSfx.play();}, 500);
+        
+        initAd();
     },
     
     update: function(){
@@ -154,12 +142,10 @@ game_main.prototype = {
 };
 
 function userInput(btn){
-    if (time_left > 0){
-        btn.tint = 0x00ffff;
-        chosen = String(btn.key + option_to_create);
-        userPressed(chosen);
-        clickSfx.play();
-    }
+    btn.tint = 0x00ffff;
+    chosen = String(btn.key + option_to_create);
+    userPressed(chosen);
+    clickSfx.play();  
 }
 
 function userPressed(chosen){
@@ -173,7 +159,7 @@ function userPressed(chosen){
     } 
  
     if (chosen == 'button1' || chosen == 'button20'){
-        var factor;
+        var factor = 1;
         
         if (init_time < 100 && init_time >= 70){
             factor = 3;
@@ -181,26 +167,26 @@ function userPressed(chosen){
         else if (init_time < 70){
            factor = 5; 
         }
-        else{
-            factor = 1;
+        else if (init_time < 20){
+           factor = 7; 
         }
         
         timeBonus = Math.round((time_left / init_time) * 100);
-        rounded = (Math.round(timeBonus/10) * 10) * factor;
+        rounded = (Math.round(timeBonus / 10) * 10) * factor;
         if (rounded == 0) rounded = 10 * factor;
         
         score += rounded;
-        scoreLabel.text = 'Score: ' + score;
+        scoreLabel.text = score + " :ניקוד";
         
-        optionLabel.text = '+ ' + rounded + ' pts';
+        optionLabel.text = rounded + 'pts';
         optionLabel.fill = '#885ead';
         
-        successSfx.play();
+        barksSfx[game.rnd.integerInRange(0, barksSfx.length - 1)].play();
     }
     else{
        takeLife();
        
-       optionLabel.text = 'F A I L !';
+       optionLabel.text = '! א ו פ ס';
        optionLabel.fill = 'red';
        
        failSfx.play();
@@ -220,29 +206,18 @@ function createOption(){
     optionLabel.fill = '#1874CD';
     
     option_to_create = game.rnd.integerInRange(0, 1);
-	
-	var randomOptionA = 0;
-	var randomOptionB = 0;
-	
-    if (option_to_create == 1){
-    	randomOptionA = game.rnd.integerInRange(0, options1A.length-1);
-    }
     
-    options = ['! ש מ א ל',
-        ' !' + options1A[randomOptionA],
-    ];
+    options = ['! ש מ א ל ן', ' !' + options1A[game.rnd.integerInRange(0, options1A.length-1)]];
     
     optionLabel.text = options[option_to_create];
 
-    btn_nameLabel.text = options1A[randomOptionA];
-
-    time_factor += 2;
-    
-    time_left = 150 - time_factor;
-    
-    init_time = time_left;
-    
-    if (init_time < 10) init_time = 10;
+    btn_nameLabel.text = options1A[game.rnd.integerInRange(0, options1A.length-1)];
+	
+	if (time_factor < 134){
+    	time_factor += 2;
+	    time_left = 150 - time_factor;  
+	    init_time = time_left;
+    }
     
     if (init_time < RND_TIME && init_time >= CRZ_TIME){
     	randomizeBtns();
@@ -252,34 +227,34 @@ function createOption(){
     	randomizeBtns();
     } 
     
-    barksSfx[option_to_create].play();
+    successSfx.play();
     
     setTimeout(function(){ waitingSfx.play(); },300);
     
     timer = setInterval(function(){
-       if (time_left > 0){
-           time_left--;
-           timeLabel.text = 'T i m e : ' + time_left; 
-           
-           if (time_left < 10) {
-               timeLabel.text = 'T i m e : 0' + time_left; 
-           }
-       }
-       
-       else{
+	    if (time_left > 0){
+	    	time_left--;
+		    timeLabel.text = time_left + ' : ז מ ן';
+	    }
+        else{
            userPressed(0);
            timeLabel.text = 'T i m e : 0' + time_left; 
-       }
+        }
     }, 30);
     
-    if (time_left > 0){
-        for (b=0; b<buttons.length; b++){
-            buttons[b].inputEnabled = true;
-            exit_btn.inputEnabled = true;
-            buttons[b].input.useHandCursor = true;
-            buttons[b].tint = 0xffffff;
-        }   
-    } 
+    for (b=0; b<buttons.length; b++){
+        buttons[b].inputEnabled = true;
+        exit_btn.inputEnabled = true;
+        buttons[b].input.useHandCursor = true;
+        buttons[b].tint = 0xffffff;
+        /*
+        if (!doubleCrazy){
+        	buttons[b].tint = 0xffffff;
+        }
+        else{
+    		buttons[b].tint = Math.random() * 0xffffff;
+        }*/
+    }   
 }
 
 function takeLife(){
@@ -294,10 +269,12 @@ function takeLife(){
         tweenBottle = game.add.tween(bottle).to( { angle: -15 }, 120, Phaser.Easing.Linear.None, true); 
         
         tweenBottle.onComplete.add(function(){ 
+        	if (lives == 0) gameOver();
+            
             bottleSfx.play();
+            
             setTimeout(function(){
                 bottle.kill(); 
-                if (lives == 0) gameOver();
             }, rndTime);
         
         }, this);
@@ -320,11 +297,11 @@ function randomizeBtns(){
     while(btn_locations.length < 2){
          var randomnumber = game.rnd.integerInRange(0, 1);
           
-         var found=false;
+         var found = false;
           
          for(var i=0;i<btn_locations.length;i++){
             if(btn_locations[i]==randomnumber){
-                found=true;
+                found = true;
                 break;
             }
          }
@@ -339,7 +316,6 @@ function randomizeBtns(){
     
     btn_kazabubuLabel.x = cordsArray[btn_locations[0]][0];
     btn_kazabubuLabel.y = cordsArray[btn_locations[0]][1];
-
 
     buttons[1].x = cordsArray[btn_locations[1]][2];
     buttons[1].y = cordsArray[btn_locations[1]][3];
@@ -378,6 +354,20 @@ function gameOver(){
     game.state.start('GameOver', false, false, score, save_score()); 
 }
 
-function avatarChosen(avatar){
-    this.game.state.start("Game");  
+function initAd(){
+	var admobid = {
+		interstitial: 'ca-app-pub-9795366520625065/5332573457',
+		banner: 'ca-app-pub-9795366520625065/5524145146'
+	};
+ 	
+ 	if(AdMob) AdMob.createBanner({
+  	  	adId: admobid.banner,
+  	  	position: AdMob.AD_POSITION.BOTTOM_CENTER,
+  	  	autoShow: true
+  	});	
+  	
+  	if(AdMob) AdMob.prepareInterstitial({
+  		adId:admobid.interstitial, 
+  		autoShow:false
+  	});
 }
