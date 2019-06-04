@@ -6,9 +6,10 @@ avatar.prototype = {
         
         var bg = this.add.image(0, 0, 'bg');
              
-        this.add.text(100, 40, ": ב ח ר   ש מ א ל ן   כ ד י   ל ה ת ח י ל   ל ש ח ק", {
-            font: '32px', fill: '#cc0000', align: 'center', stroke: "lightgrey", strokeThickness: 1
-        });     
+        chooseText = this.add.text(85, 40, ":בחר מול איזה שמאלן להתמודד", {
+            font: '32px', fill: '#cc0000', align: 'center'
+        }); 
+        chooseText.x = WIDTH / 2 - chooseText.width / 2;    
         
         for (a=0; a<7; a++){
             if (a > 3){
