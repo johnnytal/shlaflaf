@@ -12,7 +12,7 @@ game_over.prototype = {
         var bestMessage, message; 
 
         if (best){
-            bestMessage = '\n !שיא חדש';
+            bestMessage = '\n!שיא חדש';
         }
         else{
             bestMessage = '';

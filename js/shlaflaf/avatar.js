@@ -26,9 +26,7 @@ avatar.prototype = {
             
             avatars[a].inputEnabled = true;
             avatars[a].input.useHandCursor = true;
-            avatars[a].events.onInputDown.add(function(){
-            	 this.game.state.start("Game");
-            }, this);
+            avatars[a].events.onInputDown.add(avatarChosen, this);
         }
     }
 };

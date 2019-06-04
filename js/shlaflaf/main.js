@@ -1,5 +1,6 @@
 var game_main = function(game){
     var buttons, options, life, option_to_create, labels, rndTime;
+    frame = 0;
     
     cords1 = [235, 221, 155, 185];
     cords2 = [415, 220, 335, 185];
@@ -351,6 +352,11 @@ function gameOver(){
     
     gameOverSfx.play(); 
     game.state.start('GameOver', false, false, score, save_score()); 
+}
+
+function avatarChosen(avatar){
+	 frame = avatar.frame;
+	 this.game.state.start("Game");
 }
 
 function initAd(){
